@@ -1,0 +1,60 @@
+﻿@{
+  ViewData["Title"] = "Tipo de Ejercicios";
+}
+
+<div class="text-center">
+  <h1 class="titleText">TIPO DE EJERCICIOS</h1>
+</div>
+
+<!-- Button Modal -->
+<div class="mb-2">
+    <button type="button" title="Click para Agregar un Ejercicio" class="btn btn-success botonAR" onclick="NuevoRegistro()" data-bs-toggle="modal" data-bs-target="#ModalTipoEjercicio">
+      <i class="bi bi-plus-square iconos" ></i> Agregar Registro
+    </button>    
+    <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoTipoEjercicios()" class="btn btn-primary botonAR">
+      <i class="bi bi-arrow-clockwise iconos"></i> Refrescar Tabla
+    </button>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalTipoEjercicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitulo"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <input type="hidden" id="TipoEjercicioID" value="0"/>
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" style="text-transform: uppercase;" placeholder="Nombre del tipo de actividad">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="LimpiarModal()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" onclick="GuardarRegistro()" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<table class="table tablaTipoEjercicios">
+  <thead class="headTabla">
+    <tr>
+      <th>DESCRIPCIÓN</th>
+      <th class="text-center" style="width: 70px;">EDITAR</th>
+      <th class="text-center" style="width: 40px;">ELIMINAR</th>
+    </tr>
+  </thead>
+  <tbody class="bodyTabla" id="tbody-tipoejercicios"></tbody>
+</table>
+
+
+@section Scripts{
+  <script src="~/js/tipoejercicios-1.0.0.js"></script>
+}

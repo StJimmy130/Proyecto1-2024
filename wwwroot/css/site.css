@@ -1,0 +1,85 @@
+
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+
+body {
+  margin-bottom: 60px;
+  background-image: url(../img/fondo.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.titleText{
+  font-size: 60px;
+  color: white;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, .8);
+}
+
+.botonAR{
+  font-size: 18px;
+  vertical-align: middle;
+  font-weight: 600;
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.tablaTipoEjercicio{
+  color: white;
+  border-radius: 15px;
+  
+}
+
+.headTabla{
+  border: white;
+  background: rgb(0,226,121);
+  background: radial-gradient(circle, rgba(0,226,121,.7) 20%, rgba(0,0,0,.8) 91%);
+  color: white;
+  font-size: 18px;
+}
+
+
+.bodyTabla{
+  color: white;
+  background: rgb(0,226,121);
+  background: radial-gradient(circle, rgba(0,226,121,.7) 20%, rgba(0,0,0,.8) 91%);
+  font-weight: lighter;
+  font-size: 15px;
+}
+
+
+.iconos{
+  font-size: 22px;
+  
+}
+
+.tablaDescripcion{
+  vertical-align: middle;
+  font-weight: bolder;
+}
+
+.botonTabla{
+  font-size: 16px;
+  vertical-align: center;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+
+.iconoBM{
+  margin: auto;
+  margin-right: 3px;
+}
