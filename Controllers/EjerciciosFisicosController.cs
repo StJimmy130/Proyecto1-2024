@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Proyecto1_2024.Models;
 using Proyecto1_2024.Data;
 using Microsoft.AspNetCore.Authorization;
+using SQLitePCL;
 
 namespace Proyecto1_2024.Controllers;
 
@@ -38,35 +39,56 @@ public class EjerciciosFisicosController : Controller
         return Json(ejerciciosFisicos);
     }
 
-    public JsonResult GuardarEjerciciosFisicos(int EjercicioFisicoID, int TipoEjercicioID, DateTime Inicio, DateTime Fin, EstadoEmocional EstadoEmocionalInicio, EstadoEmocional EstadoEmocionalFin, string? Observaciones, )
+    public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
     {
         string resultado = "";
-        //1- VERIFICAMOS SI REALMENTE INGRESO ALGUN CARACTER Y LA VARIABLE NO SEA NULL
-        //QUIERE DECIR QUE VAMOS A EDITAR EL REGISTRO
-        var tipoEjercicioEditar = _context.TipoEjercicios.Where(t => t.TipoEjercicioID == tipoEjercicioID).SingleOrDefault();
-        if (tipoEjercicioEditar != null)
+        if(inicio != DateTime.MinValue && fin != DateTime.MinValue && !String.IsNullOrEmpty(observaciones))
         {
-            //BUSCAMOS EN LA TABLA SI EXISTE UN REGISTRO CON EL MISMO NOMBRE PERO QUE EL ID SEA DISTINTO
-            //AL QUE ESTAMOS EDITANDO
-            var existeTipoEjercicio = _context.TipoEjercicios.Where(t => t.Descripcion == descripcion && t.TipoEjercicioID != tipoEjercicioID).Count();
-            if (existeTipoEjercicio == 0)
+            if (ejercicioFisicoID == 0)
             {
-                //QUIERE DECIR QUE EL ELEMENTO Y ES CORRECTO, ENTONCES CONTINUAMOS CON EL EDITAR
-                tipoEjercicioEditar.Descripcion = descripcion;
+                var ejercicioFisico = new EjercicioFisico
+                {
+                    EjercicioFisicoID = ejercicioFisicoID,
+                    TipoEjercicioID = tipoEjercicioID,
+                    Inicio = inicio,
+                    Fin = fin,
+                    EstadoEmocionalInicio = estadoEmocionalInicio,
+                    EstadoEmocionalFin = estadoEmocionalFin,
+                    Observaciones = observaciones
+                };
+                _context.Add(ejercicioFisico);
                 _context.SaveChanges();
             }
+            
             else
             {
-                resultado = "YA EXISTE UN REGISTRO CON LA MISMA DESCRIPCIÓN";
+                var ejercicioFisicoEditar = _context.EjerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).SingleOrDefault();
+                if(ejercicioFisicoEditar != null)
+                {
+                    var existeEjercicioFisico = _context.EjerciciosFisicos.Where(e => e.TipoEjercicioID == tipoEjercicioID).Count();
+                    if(existeEjercicioFisico == 0)
+                    {
+                        ejercicioFisicoEditar.Inicio = inicio;
+                        ejercicioFisicoEditar.Fin = fin;
+                        ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
+                        ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
+                        ejercicioFisicoEditar.Observaciones = observaciones;
+                        _context.SaveChanges();
+                    }
+                }
             }
+        }
+        else
+        {
+            resultado = "DEBE INGRESAR TODOS LOS DATOS";
         }
         return Json(resultado);
     }
 
-    public JsonResult EliminarTipoEjercicio(int tipoEjercicioID)
+    public JsonResult EliminarEjercicioFisico(int ejercicioFisicoID)
     {
-        var tipoEjercicio = _context.TipoEjercicios.Find(tipoEjercicioID);
-        _context.Remove(tipoEjercicio);
+        var ejercicioFisico = _context.EjerciciosFisicos.Find(ejercicioFisicoID);
+        _context.Remove(ejercicioFisico);
         _context.SaveChanges();
 
         return Json(true);

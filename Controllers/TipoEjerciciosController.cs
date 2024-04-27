@@ -65,11 +65,13 @@ public class TipoEjerciciosController : Controller
             {
                 //QUIERE DECIR QUE VAMOS A EDITAR EL REGISTRO
                 var tipoEjercicioEditar = _context.TipoEjercicios.Where(t => t.TipoEjercicioID == tipoEjercicioID).SingleOrDefault();
-                if(tipoEjercicioEditar != null){
+                if(tipoEjercicioEditar != null)
+                {
                     //BUSCAMOS EN LA TABLA SI EXISTE UN REGISTRO CON EL MISMO NOMBRE PERO QUE EL ID SEA DISTINTO
                     //AL QUE ESTAMOS EDITANDO
                     var existeTipoEjercicio = _context.TipoEjercicios.Where(t => t.Descripcion == descripcion && t.TipoEjercicioID != tipoEjercicioID).Count();
-                    if(existeTipoEjercicio == 0){
+                    if(existeTipoEjercicio == 0)
+                    {
                         //QUIERE DECIR QUE EL ELEMENTO Y ES CORRECTO, ENTONCES CONTINUAMOS CON EL EDITAR
                         tipoEjercicioEditar.Descripcion = descripcion;
                         _context.SaveChanges();
@@ -80,7 +82,8 @@ public class TipoEjerciciosController : Controller
                 }
             }
         }  
-        else{
+        else
+        {
             resultado = "DEBE INGRESAR UNA DESCRIPCIÓN";
         }
         return Json(resultado);
