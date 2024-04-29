@@ -23,29 +23,40 @@ public class EjerciciosFisicosController : Controller
         return View();
     }
 
-    public JsonResult ListadoEjerciciosFisicos(int? id)
+    // public JsonResult ListadoEjerciciosFisicos(int? id)
+    // {
+    //     //DEFINIMOS UNA VARIABLE EN DONDE GUARDAMOS EL LISTADO COMPLETO DE EJERCICIOS FISICOS
+    //     var ejerciciosFisicos = _context.EjerciciosFisicos.ToList();
+
+    //     //LUEGO PREGUNTAMOS SI EL USUARIO INGRESO UN ID
+    //     //QUIERE DECIR QUE QUIERE UN EJERCICIO FISICO EN PARTICULAR
+    //     if (id != null)
+    //     {
+    //         //FILTRAMOS EL LISTADO COMPLETO DE EJERCICIOS POR EL EJERCICIO QUE COINCIDA CON ESE ID
+    //         ejerciciosFisicos = ejerciciosFisicos.Where(e => e.EjercicioFisicoID == id).ToList();
+    //     }
+
+    //     return Json(ejerciciosFisicos);
+    // }
+    
+
+    public JsonResult ObtenerEstadoEmocionalEnum()
     {
-        //DEFINIMOS UNA VARIABLE EN DONDE GUARDAMOS EL LISTADO COMPLETO DE EJERCICIOS FISICOS
-        var ejerciciosFisicos = _context.EjerciciosFisicos.ToList();
-
-        //LUEGO PREGUNTAMOS SI EL USUARIO INGRESO UN ID
-        //QUIERE DECIR QUE QUIERE UN EJERCICIO FISICO EN PARTICULAR
-        if (id != null)
-        {
-            //FILTRAMOS EL LISTADO COMPLETO DE EJERCICIOS POR EL EJERCICIO QUE COINCIDA CON ESE ID
-            ejerciciosFisicos = ejerciciosFisicos.Where(e => e.EjercicioFisicoID == id).ToList();
-        }
-
-        return Json(ejerciciosFisicos);
+        var estadoEmocional = Enum.GetNames(typeof(EstadoEmocional)).ToList();
+        return Json(estadoEmocional);
     }
 
     public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
     {
         string resultado = "";
-        if(inicio != DateTime.MinValue && fin != DateTime.MinValue && !String.IsNullOrEmpty(observaciones))
+
+        // VERIFICAR SI SE HAN PROPORCIONADO TODOS LOS DATOS NECESARIOS PARA GUARDAR EL EJERCICIO FÍSICO
+        if(inicio != DateTime.MinValue && fin != DateTime.MinValue && estadoEmocionalInicio != 0 && estadoEmocionalFin != 0)
         {
+            //VERIFICAR SI EL EJERCICIO FÍSICO ES NUEVO O EXISTENTE
             if (ejercicioFisicoID == 0)
             {
+                // CREAR UN NUEVO OBJETO "EjercicioFisico" Y GUARDARLO EN LA BASE DE DATOS
                 var ejercicioFisico = new EjercicioFisico
                 {
                     EjercicioFisicoID = ejercicioFisicoID,
@@ -59,29 +70,27 @@ public class EjerciciosFisicosController : Controller
                 _context.Add(ejercicioFisico);
                 _context.SaveChanges();
             }
-            
             else
             {
-                var ejercicioFisicoEditar = _context.EjerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).SingleOrDefault();
+                //OBTENER UN EJERCICIO FÍSICO EXISTENTE EN LA BASE DE DATOS Y EDITARLO
+                var ejercicioFisicoEditar = _context.EjerciciosFisicos.FirstOrDefault(e => e.EjercicioFisicoID == ejercicioFisicoID);
                 if(ejercicioFisicoEditar != null)
                 {
-                    var existeEjercicioFisico = _context.EjerciciosFisicos.Where(e => e.TipoEjercicioID == tipoEjercicioID).Count();
-                    if(existeEjercicioFisico == 0)
-                    {
-                        ejercicioFisicoEditar.Inicio = inicio;
-                        ejercicioFisicoEditar.Fin = fin;
-                        ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
-                        ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
-                        ejercicioFisicoEditar.Observaciones = observaciones;
-                        _context.SaveChanges();
-                    }
+                    ejercicioFisicoEditar.Inicio = inicio;
+                    ejercicioFisicoEditar.Fin = fin;
+                    ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
+                    ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
+                    ejercicioFisicoEditar.Observaciones = observaciones;
+                    _context.SaveChanges();        
                 }
             }
         }
         else
         {
+            // INDICAR QUE TODOS LOS DATOS DEBEN SER INGRESADOS
             resultado = "DEBE INGRESAR TODOS LOS DATOS";
         }
+        //DEVOLVER EL RESULTADO DE LA OPERACIÓN EN FORMATO JSON
         return Json(resultado);
     }
 

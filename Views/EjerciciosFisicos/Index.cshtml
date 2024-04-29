@@ -2,12 +2,48 @@
     ViewData["Title"] = "Ejercicios Fisicos";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Ejercicios Fisicos</h1>
 </div>
 
+<div class="containerFormEjerciciosFisicos">
+    <form id="FormEjercicioFisico">
+        <div class="form-group">
+            <label for="inicio">Inicio:</label>
+            <input type="datetime-local" id="inicio" name="inicio">
+        </div>
+        <div class="form-group">
+            <label for="fin">Fin:</label>
+            <input type="datetime-local" id="fin" name="fin">
+        </div>
+        <div class="dropdown">
+            <label for="estadoEmocionalIncio">Seleccione estado emocional al inciar:</label>
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Seleccionar
+            </button>
+            <ul class="dropdown-menu" id="estadoEmocionalInicio">
+            </ul>
+        </div>
+        <div class="dropdown">
+            <label for="estadoEmocionalFin">Seleccione estado emocional al finalizar:</label>
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Seleccionar
+            </button>
+            <ul class="dropdown-menu" id="estadoEmocionalFin">
+            </ul>
+        </div>
+        <div class="form-group">
+            <label for="observaciones">Observaciones:</label>
+            <textarea id="observaciones" name="observaciones" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+</div>
 
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/ejerciciosfisicos-1.0.0.js"></script>
 }

@@ -13,7 +13,6 @@ namespace Proyecto1_2024.Models
         public EstadoEmocional EstadoEmocionalInicio { get; set; }
         public EstadoEmocional EstadoEmocionalFin { get; set; }
         public string? Observaciones { get; set; }
-
         public virtual TipoEjercicio TipoEjercicios { get; set; }
     }
 

@@ -23,18 +23,25 @@ body {
   height: 100vh;
 }
 
+/* TITULOS */
 .titleText{
   font-size: 60px;
   color: white;
   text-shadow: 4px 4px 4px rgba(0, 0, 0, .8);
 }
 
+/* BOTONES AGREGAR Y REFRESCAR */
 .botonAR{
   font-size: 18px;
   vertical-align: middle;
   font-weight: 600;
   margin-right: 4px;
   margin-left: 4px;
+}
+/* ICONOS DE BOTONES AGREGAR Y REFRESCAR */
+.iconosAR{
+  font-size: 22px;
+  
 }
 
 .tablaTipoEjercicio{
@@ -61,11 +68,6 @@ body {
 }
 
 
-.iconos{
-  font-size: 22px;
-  
-}
-
 .tablaDescripcion{
   vertical-align: middle;
   font-weight: bolder;
@@ -78,8 +80,17 @@ body {
   flex-direction: row;
   margin: auto;
 }
-
+/* ICONOS BORRAR Y MODIFICAR */
 .iconoBM{
   margin: auto;
   margin-right: 3px;
+}
+
+.containerFormEjerciciosFisicos{
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

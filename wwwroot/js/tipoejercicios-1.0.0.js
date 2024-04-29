@@ -107,7 +107,7 @@ function GuardarRegistro(){
     //GUARDAMOS EN UNA VARIABLE LO ESCRITO EN EL INPUT DESCRIPCION
     let tipoEjercicioID = document.getElementById("TipoEjercicioID").value;
     let descripcion = document.getElementById("descripcion").value;
-    //POR UN LADO PROGRAR VERIFICACIONES DE DATOS EN EL FRONT CUANDO 
+    //POR UN LADO PROGRAMAR VERIFICACIONES DE DATOS EN EL FRONT CUANDO 
     //SON DE INGRESO DE Y NO SE NECESITA VERIFICAR EN BASE DE DATOS.
     //LUEGO POR OTRO LADO HACER VERIFICACIÓN DE DATOS EN EL BACK,
     //SI EXISTE EL ELEMENTO SI NECESITAMOS BASE DE DATOS.
@@ -117,7 +117,10 @@ function GuardarRegistro(){
         url: '../../TipoEjercicios/GuardarTipoEjercicio',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
-        data: { tipoEjercicioID: tipoEjercicioID, descripcion: descripcion},
+        data: { 
+            tipoEjercicioID: tipoEjercicioID, 
+            descripcion: descripcion
+        },
         // especifica si será una petición POST o GET
         type: 'POST',
         // el tipo de información que se espera de respuesta
