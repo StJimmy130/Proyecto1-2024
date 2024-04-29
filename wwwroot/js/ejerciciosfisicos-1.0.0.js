@@ -3,7 +3,7 @@ $.ajax({
     type: 'GET',
     dataType: 'json',
     success: function(data) {
-        let estadoEmocionalInicio = $('#estadoEmocionalInicio');
+        const estadoEmocionalInicio = $('#estadoEmocionalInicio');
         estadoEmocionalInicio.empty();
         
         if (data && data.length > 0) {
@@ -11,7 +11,8 @@ $.ajax({
                 // Agrega cada valor como un elemento de lista al dropdown
                 estadoEmocionalInicio.append(`<li><a class="dropdown-item" href="#">${valor}</a></li>`);
             });
-        } else {
+        } 
+        else{
             estadoEmocionalInicio.text('No se encontraron valores de estado emocional.');
         }
     },
@@ -27,7 +28,7 @@ $.ajax({
     type: 'GET',
     dataType: 'json',
     success: function(data) {
-        let estadoEmocionalFin = $('#estadoEmocionalFin');
+        const estadoEmocionalFin = $('#estadoEmocionalFin');
         estadoEmocionalFin.empty();
         
         if (data && data.length > 0) {
