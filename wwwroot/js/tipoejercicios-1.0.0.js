@@ -1,4 +1,4 @@
-window.onload = ListadoTipoEjercicios();
+window.onload = ListadoTipoEjercicios;
 
 function ListadoTipoEjercicios(){
     $.ajax({
@@ -111,7 +111,6 @@ function GuardarRegistro(){
     //SON DE INGRESO DE Y NO SE NECESITA VERIFICAR EN BASE DE DATOS.
     //LUEGO POR OTRO LADO HACER VERIFICACIÓN DE DATOS EN EL BACK,
     //SI EXISTE EL ELEMENTO SI NECESITAMOS BASE DE DATOS.
-    console.log(descripcion);
     $.ajax({
         // la URL para la petición
         url: '../../TipoEjercicios/GuardarTipoEjercicio',
