@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free-6.5.2-web/css/fontawesome.css">
+    <link rel="stylesheet" href="~/lib/fontawesome-free-6.5.2-web/css/brands.css">
+    <link rel="stylesheet" href="~/lib/fontawesome-free-6.5.2-web/css/solid.css">
+
 </head>
 <body>
-    <header>
+    @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
@@ -36,7 +40,34 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header> *@
+
+
+<input type="checkbox" id="check">
+    <label class="labelCheck" for="check">
+        <i class="fa-solid fa-bars" id="open"></i>
+        <i class="fa-solid fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+        <header>Logo</header>
+        <ul class="listaSidebar">
+            <li>
+                <a asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i>Home</a>
+            </li>
+            <li>
+                <a asp-controller="Home" asp-action="Privacy"><i class="fa-solid fa-lock"></i>Privacy</a>
+            </li>
+            <li>
+                <a asp-controller="TipoEjercicios" asp-action="Index"><i class="fa-solid fa-dumbbell"></i>Tipo de Ejercicios</a>
+            </li>
+            <li>
+                <a asp-controller="EjerciciosFisicos" asp-action="Index"><i class="fa-solid fa-stopwatch-20"></i>Ejercicios Físicos</a>
+            </li>
+        </ul>
+        <partial class="login-reg" name="_LoginPartial" />
+        
+    </div>
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
