@@ -56,7 +56,8 @@ namespace Proyecto1_2024.Migrations
                 {
                     TipoEjercicioID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Eliminado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,6 +170,30 @@ namespace Proyecto1_2024.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EjerciciosFisicos",
+                columns: table => new
+                {
+                    EjercicioFisicoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoEjercicioID = table.Column<int>(type: "int", nullable: false),
+                    Inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EstadoEmocionalInicio = table.Column<int>(type: "int", nullable: false),
+                    EstadoEmocionalFin = table.Column<int>(type: "int", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EjerciciosFisicos", x => x.EjercicioFisicoID);
+                    table.ForeignKey(
+                        name: "FK_EjerciciosFisicos_TipoEjercicios_TipoEjercicioID",
+                        column: x => x.TipoEjercicioID,
+                        principalTable: "TipoEjercicios",
+                        principalColumn: "TipoEjercicioID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -207,6 +232,11 @@ namespace Proyecto1_2024.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EjerciciosFisicos_TipoEjercicioID",
+                table: "EjerciciosFisicos",
+                column: "TipoEjercicioID");
         }
 
         /// <inheritdoc />
@@ -228,13 +258,16 @@ namespace Proyecto1_2024.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "TipoEjercicios");
+                name: "EjerciciosFisicos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "TipoEjercicios");
         }
     }
 }

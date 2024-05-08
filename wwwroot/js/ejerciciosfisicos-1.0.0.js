@@ -1,4 +1,4 @@
-Window.onload = ListadoEjerciciosFisicos;
+Window.onload = ListadoEjerciciosFisicos();
 
 // Función para cargar opciones de estado emocional en un dropdown
 function CargarOpcionesEstadoEmocional(data, dropdownID) {
@@ -6,7 +6,7 @@ function CargarOpcionesEstadoEmocional(data, dropdownID) {
     dropdown.empty();
 
     // Agregar la opción "Seleccionar" al principio del dropdown
-    dropdown.append(`<option value="" disabled selected>Seleccionar</option>`);
+    dropdown.append(`<option value="0" disabled selected>Seleccionar</option>`);
 
     if (data && data.length > 0) {
         data.forEach(valor => {
@@ -28,7 +28,7 @@ $.ajax({
     },
     error: function(xhr, status, error) {
         console.error('Error al obtener los valores del enum:', error);
-        $('#estadoEmocionalInicio').append(`<option value="">Error al obtener los valores del enum</option>`);
+        $('#estadoEmocionalInicio').append(`<option value="0">Error al obtener los valores del enum</option>`);
     }
 });
 // Realizar la petición AJAX para obtener las opciones de estado emocional al finalizar
@@ -41,7 +41,7 @@ $.ajax({
     },
     error: function(xhr, status, error) {
         console.error('Error al obtener los valores del enum:', error);
-        $('#estadoEmocionalFin').append(`<option value="">Error al obtener los valores del enum</option>`);
+        $('#estadoEmocionalFin').append(`<option value="0">Error al obtener los valores del enum</option>`);
     }
 });
 
@@ -49,37 +49,37 @@ $.ajax({
 
 
 // Función para cargar opciones en un dropdown desde los datos obtenidos del servidor
-function CargarOpcionesTipoDeEjercicios(data, dropdownID) {
-    const dropdown = $(`#${dropdownID}`);
-    dropdown.empty();
+// function CargarOpcionesTipoDeEjercicios(data, dropdownID) {
+//     const dropdown = $(`#${dropdownID}`);
+//     dropdown.empty();
 
-    // Agregar la opción "Seleccionar" al principio del dropdown
-    dropdown.append(`<option value="" disabled selected>Seleccionar</option>`);
+//     // Agregar la opción "Seleccionar" al principio del dropdown
+//     dropdown.append(`<option value="" disabled selected>Seleccionar</option>`);
 
-    // Si hay datos disponibles, agregar opciones al dropdown
-    if (data && data.length > 0) {
-        data.forEach(item => {
-            dropdown.append(`<option value="${item.tipoEjercicioID}">${item.descripcion}</option>`);
-        });
-    } else {
-        // Si no hay datos disponibles, mostrar un mensaje en el dropdown
-        dropdown.append(`<option value="">No se encontraron valores</option>`);
-    }
-}
+//     // Si hay datos disponibles, agregar opciones al dropdown
+//     if (data && data.length > 0) {
+//         data.forEach(item => {
+//             dropdown.append(`<option value="${item.tipoEjercicioID}">${item.descripcion}</option>`);
+//         });
+//     } else {
+//         // Si no hay datos disponibles, mostrar un mensaje en el dropdown
+//         dropdown.append(`<option value="">No se encontraron valores</option>`);
+//     }
+// }
 
-// Realizar la petición AJAX para obtener los tipos de ejercicios al iniciar
-$.ajax({
-    url: '/EjerciciosFisicos/ListadoTipoEjerciciosFisicos',
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
-        CargarOpcionesTipoDeEjercicios(data, 'selectTipoEjercicio');
-    },
-    error: function(xhr, status, error) {
-        console.error('Error al obtener los tipos de ejercicios:', error);
-        $('#selectTipoEjercicio').append(`<option value="">Error al obtener los tipos de ejercicios</option>`);
-    }
-});
+// // Realizar la petición AJAX para obtener los tipos de ejercicios al iniciar
+// $.ajax({
+//     url: '/EjerciciosFisicos/ListaEjerciciosFisicos',
+//     type: 'GET',
+//     dataType: 'json',
+//     success: function(data) {
+//         CargarOpcionesTipoDeEjercicios(data, 'selectTipoEjercicio');
+//     },
+//     error: function(xhr, status, error) {
+//         console.error('Error al obtener los tipos de ejercicios:', error);
+//         $('#selectTipoEjercicio').append(`<option value="">Error al obtener los tipos de ejercicios</option>`);
+//     }
+// });
 
 
 
@@ -97,9 +97,9 @@ function NuevoRegistro(){
 function LimpiarModal(){
     document.getElementById("ejercicioFisicoID").value = 0;
     document.getElementById("tipoEjercicioID").value = 0;
-    document.getElementById("incio").value = "";
+    document.getElementById("inicio").value = "";
     document.getElementById("fin").value = "";
-    document.getElementById("estadoEmocionalIncio").value = 0;
+    document.getElementById("estadoEmocionalInicio").value = 0;
     document.getElementById("estadoEmocionalFin").value = 0;
     document.getElementById("observaciones").value = ""
 }
@@ -128,9 +128,9 @@ function ListadoEjerciciosFisicos(){
                 
                 contenidoTabla += `
                 <tr>
-                    <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioID}</td>
-                    <td class="tablaDescripcion">${ejercicioFisico.inicio}</td>
-                    <td class="tablaDescripcion">${ejercicioFisico.fin}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioDescripcion}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.fechaInicioString}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalFin}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.observaciones}</td>
@@ -174,12 +174,6 @@ function GuardarEjerciciosFisicos(){
     let observaciones = document.getElementById("observaciones").value;
 
 
-    // VERIFICAR LOS DATOS EN EL FRONT
-    if (!inicio || !fin || !estadoEmocionalInicio || !estadoEmocionalFin) { 
-        alert("Por favor, complete todos los campos obligatorios.");
-        return; // SALIR DE LA FUNCIÓN SI FALTAN DATOS
-    }
-
     // REALIZAR LA PETICIÓN AJAX A LA BASE DE DATOS
     $.ajax({
         url: '../../EjerciciosFisicos/GuardarEjerciciosFisicos',
@@ -196,7 +190,7 @@ function GuardarEjerciciosFisicos(){
         dataType: 'json',
         success: function(resultado) 
         {
-            if (resultado != "") {
+            if(resultado != ""){
                 alert(resultado);
             }
             ListadoEjerciciosFisicos()
@@ -206,4 +200,81 @@ function GuardarEjerciciosFisicos(){
         }
     });
 }
+
+
+function ValidacionEliminar(ejercicioFisicoID){
+    let siElimina = confirm("¿Está seguro de que desea eliminar este registro?");
+    if (siElimina == true)
+    {
+        EliminarRegistro(ejercicioFisicoID)
+    }
+}
+
+
+function EliminarRegistro(ejercicioFisicoID){
+    $.ajax({
+        // la URL para la petición
+        url: '../../EjerciciosFisicos/EliminarEjercicioFisico',
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: { ejercicioFisicoID: ejercicioFisicoID},
+        // especifica si será una petición POST o GET
+        type: 'POST',
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (resultado) {           
+            ListadoEjerciciosFisicos();
+        },
+
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            console.log('Disculpe, existió un problema al eliminar el registro.');
+        }
+    });    
+
+}
+
+
+
+function AbrirModalEditar(ejercicioFisicoID){
+    $.ajax({
+        // la URL para la petición
+        url: '../../EjerciciosFisicos/EjerciciosFisicos',
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: { ejercicioFisicoID: ejercicioFisicoID},
+        // especifica si será una petición POST o GET
+        type: 'POST',
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (ejercicioFisico) {
+            let ejerciciosFisicos = ejercicioFisico[0];
+
+            document.getElementById("ejercicioFisicoID").value = ejercicioFisicoID;
+            $("#ModalTitulo").text("Editar Tipo de Ejercicio");
+            document.getElementById("tipoEjercicioID").value = ejerciciosFisicos.tipoEjercicioID;
+            document.getElementById("inicio").value = ejerciciosFisicos.inicio;
+            document.getElementById("fin").value = ejerciciosFisicos.fin;
+            document.getElementById("estadoEmocionalInicio").value = ejerciciosFisicos.estadoEmocionalInicio;
+            document.getElementById("estadoEmocionalFin").value = ejerciciosFisicos.estadoEmocionalFin;
+            document.getElementById("observaciones").value = ejerciciosFisicos.observaciones;
+
+            $("#ModalEjercicioFisico").modal("show");
+        },
+
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
+        }
+    });
+}
+
 
