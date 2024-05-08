@@ -12,6 +12,10 @@
     onclick="NuevoRegistro()" data-bs-toggle="modal" data-bs-target="#ModalEjercicioFisico">
     <i class="bi bi-plus-square iconosAR"></i> Agregar Registro
   </button>
+  <button type="button" title="Click para Agregar un Ejercicio Físico" class="btn btn-success botonAR"
+    onclick="ListadoEjerciciosFisicos()">
+    <i class="bi bi-plus-square iconosAR"></i> Refrescar
+  </button>
 </div>
 
 
@@ -56,7 +60,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" onclick="LimpiarModal()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" onclick="GuardarEjerciciosFisicos()" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+        <button type="button" onclick="GuardarEjerciciosFisicos()" class="btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>

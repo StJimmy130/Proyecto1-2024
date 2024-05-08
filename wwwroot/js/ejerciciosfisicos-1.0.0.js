@@ -1,4 +1,4 @@
-window.onload = ListadoEjerciciosFisicos;
+Window.onload = ListadoEjerciciosFisicos;
 
 // Función para cargar opciones de estado emocional en un dropdown
 function CargarOpcionesEstadoEmocional(data, dropdownID) {
@@ -107,7 +107,7 @@ function LimpiarModal(){
 function ListadoEjerciciosFisicos(){
     $.ajax({
         // la URL para la petición
-        url: '../../EjerciciosFisicos/ListaEjerciciosFisicos',
+        url: '../../EjerciciosFisicos/ListadoTipoEjerciciosFisicos',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
         data: {  },
@@ -172,6 +172,7 @@ function GuardarEjerciciosFisicos(){
     let estadoEmocionalInicio = document.getElementById("estadoEmocionalInicio").value;
     let estadoEmocionalFin = document.getElementById("estadoEmocionalFin").value;
     let observaciones = document.getElementById("observaciones").value;
+
 
     // VERIFICAR LOS DATOS EN EL FRONT
     if (!inicio || !fin || !estadoEmocionalInicio || !estadoEmocionalFin) { 
