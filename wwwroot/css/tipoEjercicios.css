@@ -1,0 +1,136 @@
+body{
+    background-image: url(../img/Fondo3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.t-stroke {
+    position: relative;
+    text-align: center;
+    font-size: 5rem;
+    color: transparent;
+    -moz-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 2px;
+    -moz-text-stroke-color: #000000;
+    -webkit-text-stroke-color: #ffffff;
+}
+
+.t-shadow {
+    position: relative;
+}
+
+.t-shadow::after {
+    content: "TIPO DE EJERCICIOS!";
+    font-size: 5rem;
+    letter-spacing: 0px;
+    background: url(../img/fondoTitulo.jpg) 50% 47%
+    repeat;
+    background-size: 150%;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -moz-text-stroke-width: 0;
+    -webkit-text-stroke-width: 0;
+    position: absolute;
+    text-align: center;
+    left: 8px;
+    right: 0;
+    top: 6px;
+    z-index: -1;
+    transition: all 0.5s ease;
+}
+
+.buttonAdd {
+    position: relative;
+    overflow: hidden;
+    height: 3rem;
+    padding: 0 2rem;
+    margin: 0 1rem 1rem 0;
+    border-radius: 1.5rem;
+    background: #3d3a4e;
+    background-size: 400%;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.buttonAdd:hover::before {
+    -webkit-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+.button-content {
+    position: relative;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 3rem;
+    letter-spacing: 0.05rem;
+    vertical-align: middle;
+}
+
+.buttonAdd::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(
+        82.3deg,
+        rgba(150, 93, 233, 1) 10.8%,
+        rgba(99, 88, 238, 1) 94.3%
+        );
+    transition: all 0.475s;
+}
+
+
+.buttonRefresh {
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    height: 3rem;
+    padding: 0 2rem;
+    margin: 0 1rem 1rem 0;
+    border-radius: 1.5rem;
+    background: #425541;
+    background-size: 400%;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.buttonRefresh:hover::before {
+    -webkit-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+.buttonRefresh::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(
+        82.3deg,
+        rgb(93, 233, 156) 10.8%,
+        rgb(88, 238, 101) 94.3%
+        );
+    transition: all 0.475s;
+}
+
+.iconosAddRefresh{
+    font-size: 22px;
+    font-weight: 1200;
+}

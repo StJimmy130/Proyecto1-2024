@@ -1,18 +1,23 @@
 ﻿@{
   ViewData["Title"] = "Tipo de Ejercicios";
 }
+<link rel="stylesheet" href="~/css/tipoEjercicios.css">
 
-<div class="text-center">
-  <h1 class="titleText">TIPO DE EJERCICIOS</h1>
-</div>
+
+<h1 class="t-stroke t-shadow">TIPO DE EJERCICIOS!</h1>
 
 <!-- Button Modal -->
 <div class="mb-2">
-    <button type="button" title="Click para Agregar un Ejercicio" class="btn btn-success botonAR" onclick="NuevoRegistro()" data-bs-toggle="modal" data-bs-target="#ModalTipoEjercicio">
-      <i class="bi bi-plus-square iconosAR" ></i> Agregar Registro
+    <button type="button" title="Click para Agregar un Ejercicio" class="buttonAdd" 
+    onclick="NuevoRegistro()" data-bs-toggle="modal" data-bs-target="#ModalTipoEjercicio">
+      <span class="button-content">
+        <i class="bi bi-plus-square iconosAddRefresh" ></i> Agregar Registro
+      </span>
     </button>    
-    <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoTipoEjercicios()" class="btn btn-primary botonAR">
-      <i class="bi bi-arrow-clockwise iconosAR"></i> Refrescar Tabla
+    <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoTipoEjercicios()" class="buttonRefresh">
+      <span class="button-content">
+        <i class="bi bi-arrow-clockwise iconosAddRefresh"></i> Refrescar Tabla
+      </span>
     </button>
 </div>
 

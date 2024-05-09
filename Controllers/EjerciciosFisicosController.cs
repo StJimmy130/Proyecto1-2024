@@ -84,56 +84,67 @@ public class EjerciciosFisicosController : Controller
 
     public JsonResult ObtenerEstadoEmocionalEnum()
     {
+        List<VistaEstadoEmocional> estadosEmocionalesMostrar= new List<VistaEstadoEmocional>();
         var estadoEmocional = Enum.GetNames(typeof(EstadoEmocional)).ToList();
-        return Json(estadoEmocional);
+        for (int i = 0; i < estadoEmocional.Count; i++)
+        {
+            var estadoEmocionalMostrar = new VistaEstadoEmocional
+            {
+                EstadoEmocionalID = i + 1,
+                Descripcion = estadoEmocional[i]
+            };
+            estadosEmocionalesMostrar.Add(estadoEmocionalMostrar);
+        }
+
+        return Json(estadosEmocionalesMostrar);
     }
 
-public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
-{
-    string resultado = "";
-
-    if (ejercicioFisicoID != null)
+    public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
     {
-        // Verificar si el ejercicio físico es nuevo o existente
-        if (ejercicioFisicoID == 0)
+        string resultado = "";
+
+        if (ejercicioFisicoID != null)
         {
-            // Crear un nuevo objeto "EjercicioFisico" y guardarlo en la base de datos
-            var ejercicioFisico = new EjercicioFisico
+            // Verificar si el ejercicio físico es nuevo o existente
+            if (ejercicioFisicoID == 0)
             {
-                EjercicioFisicoID = ejercicioFisicoID,
-                TipoEjercicioID = tipoEjercicioID,
-                Inicio = inicio,
-                Fin = fin,
-                EstadoEmocionalInicio = estadoEmocionalInicio,
-                EstadoEmocionalFin = estadoEmocionalFin,
-                Observaciones = observaciones
-            };
-            _context.Add(ejercicioFisico);
-            _context.SaveChanges();
-            
-            resultado = "Ejercicio físico guardado correctamente";
-        }
-        else
-        {
-            // Obtener un ejercicio físico existente en la base de datos y editarlo
-            var ejercicioFisicoEditar = _context.EjerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).SingleOrDefault();
-            if (ejercicioFisicoEditar != null)
-            {
-                ejercicioFisicoEditar.TipoEjercicioID = tipoEjercicioID;
-                ejercicioFisicoEditar.Inicio = inicio;
-                ejercicioFisicoEditar.Fin = fin;
-                ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
-                ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
-                ejercicioFisicoEditar.Observaciones = observaciones;
+                // Crear un nuevo objeto "EjercicioFisico" y guardarlo en la base de datos
+                var ejercicioFisico = new EjercicioFisico
+                {
+                    EjercicioFisicoID = ejercicioFisicoID,
+                    TipoEjercicioID = tipoEjercicioID,
+                    Inicio = inicio,
+                    Fin = fin,
+                    EstadoEmocionalInicio = estadoEmocionalInicio,
+                    EstadoEmocionalFin = estadoEmocionalFin,
+                    Observaciones = observaciones
+                };
+                _context.Add(ejercicioFisico);
                 _context.SaveChanges();
                 
-                resultado = "Ejercicio físico actualizado correctamente";
+                resultado = "Ejercicio físico guardado correctamente";
+            }
+            else
+            {
+                // Obtener un ejercicio físico existente en la base de datos y editarlo
+                var ejercicioFisicoEditar = _context.EjerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).SingleOrDefault();
+                if (ejercicioFisicoEditar != null)
+                {
+                    ejercicioFisicoEditar.TipoEjercicioID = tipoEjercicioID;
+                    ejercicioFisicoEditar.Inicio = inicio;
+                    ejercicioFisicoEditar.Fin = fin;
+                    ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
+                    ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
+                    ejercicioFisicoEditar.Observaciones = observaciones;
+                    _context.SaveChanges();
+                    
+                    resultado = "Ejercicio físico actualizado correctamente";
+                }
             }
         }
+        // Devolver el resultado de la operación en formato JSON
+        return Json(resultado);
     }
-    // Devolver el resultado de la operación en formato JSON
-    return Json(resultado);
-}
 
 
     public JsonResult EliminarEjercicioFisico(int ejercicioFisicoID)

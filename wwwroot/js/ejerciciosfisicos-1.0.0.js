@@ -11,7 +11,7 @@ function CargarOpcionesEstadoEmocional(data, dropdownID) {
     if (data && data.length > 0) {
         data.forEach(valor => {
             // Agrega cada valor como una opción en el dropdown
-            dropdown.append(`<option value="${valor}">${valor}</option>`);
+            dropdown.append(`<option value="${valor.estadoEmocionalID}">${valor.descripcion}</option>`);
         });
     } else {
         dropdown.append(`<option value="">No se encontraron valores de estado emocional</option>`);
@@ -203,11 +203,28 @@ function GuardarEjerciciosFisicos(){
 
 
 function ValidacionEliminar(ejercicioFisicoID){
-    let siElimina = confirm("¿Está seguro de que desea eliminar este registro?");
-    if (siElimina == true)
+    Swal.fire
+    ({
+        title: "¿Estas seguro?",
+        text: "Este dato se eliminará!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "No, cancelar!",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, borrar!"
+    })
+    .then((result) => 
     {
+        if (result.isConfirmed) {
+        Swal.fire({
+            title: "Borrado!",
+            text: "Tu registro ha sido eliminado.",
+            icon: "success",
+        });
         EliminarRegistro(ejercicioFisicoID)
-    }
+        }
+    });
 }
 
 

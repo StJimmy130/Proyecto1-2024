@@ -1,0 +1,58 @@
+body{
+    background-image: url(../img/fondo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.t-stroke {
+    position: relative;
+    text-align: center;
+    font-size: 5rem;
+    color: transparent;
+    -moz-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 2px;
+    -moz-text-stroke-color: #000000;
+    -webkit-text-stroke-color: #ffffff;
+}
+
+.t-shadow {
+    position: relative;
+}
+
+.t-shadow::after {
+    content: "WORKOUT WATCH!";
+    font-size: 5rem;
+    letter-spacing: 0px;
+    background: url(../img/fondoTitulo.jpg) 50% 47%
+    repeat;
+    background-size: 150%;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -moz-text-stroke-width: 0;
+    -webkit-text-stroke-width: 0;
+    position: absolute;
+    text-align: center;
+    left: 8px;
+    right: 0;
+    top: 6px;
+    z-index: -1;
+    transition: all 0.5s ease;
+}
+
+.intro{
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: lighter;
+    margin-top: 150px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 700px;
+}

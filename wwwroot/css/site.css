@@ -18,13 +18,7 @@ html{
   margin: 0;
   padding: 0;
 }
-body {
-  background-image: url(../img/fondo.jpg);
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  background-repeat: no-repeat;
-}
+
 
 /* SIDEBAR */
 .listaSidebar{
@@ -36,13 +30,15 @@ body {
 
 .sidebar{
   position: fixed;
-  left: -250px;
-  width: 250px;
+  left: -350px;
+  width: 350px;
   height: 110vh;
   top: -3px;
   background-color: #042331;
   transition: all .5s ease;
 }
+
+
 
 .sidebar header{
   font-size: 22px;
@@ -87,7 +83,7 @@ body {
 .labelCheck #open, .labelCheck #cancel{
   position: absolute;
   cursor: pointer;
-  background-color: #042331;
+  background-color: #204150;
   border-radius: 3px;
 }
 
@@ -101,17 +97,18 @@ body {
 }
 
 .labelCheck #cancel{
-  z-index: 1111;
+  z-index: 2;
   left: -210px;
   top: 20px;
   font-size: 20px;
-  color: #0a5275;
+  color: white;
   padding: 4px 9px;
   transition: all .5s ease;
 }
 
 #check:checked ~ .sidebar{
   left: 0;
+  z-index: 1;
 }
 
 #check:checked ~ .labelCheck #open{
@@ -121,30 +118,13 @@ body {
 }
 
 #check:checked ~ .labelCheck #cancel{
-  left: 200px;
+  left: 300px;
 }
 
 
-/* TITULOS */
-.titleText{
-  font-size: 60px;
-  color: white;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, .8);
-}
 
-/* BOTONES AGREGAR Y REFRESCAR */
-.botonAR{
-  font-size: 18px;
-  vertical-align: middle;
-  font-weight: 600;
-  margin-right: 4px;
-  margin-left: 4px;
-}
-/* ICONOS DE BOTONES AGREGAR Y REFRESCAR */
-.iconosAR{
-  font-size: 22px;
-  
-}
+
+
 
 .tablaTipoEjercicio{
   color: white;

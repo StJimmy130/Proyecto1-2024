@@ -48,5 +48,11 @@ namespace Proyecto1_2024.Models
         Satisfecho,
         Desanimado
     }
+
+    public class VistaEstadoEmocional
+    {
+        public int EstadoEmocionalID { get; set; }
+        public string? Descripcion { get; set; }
+    }
 }
 

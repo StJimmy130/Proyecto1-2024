@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Proyecto1_2024</title>
+    <title>Workout Watch!</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -49,7 +49,7 @@
         <i class="fa-solid fa-times" id="cancel"></i>
     </label>
     <div class="sidebar">
-        <header>Sport Control</header>
+        <header>Workout Watch!</header>
         <ul class="listaSidebar">
             <li>
                 <a asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i>Home</a>
@@ -63,10 +63,10 @@
             <li>
                 <a asp-controller="EjerciciosFisicos" asp-action="Index"><i class="fa-solid fa-stopwatch-20"></i>Ejercicios Físicos</a>
             </li>
-            <footer>
-                <partial  name="_LoginPartial" />
-            </footer>    
-        </ul>
+            <footer class="footerSidebar">
+                <partial class="footerSidebar" name="_LoginPartial" />
+            </footer>
+        </ul>   
     </div>
     
     <div class="container">
@@ -85,6 +85,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
