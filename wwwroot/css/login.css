@@ -1,7 +1,8 @@
 body{
-    background-image: url(../img/FondoLogin-register.jpg);
+    background-image: url(../img/Fondo4.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-image: fixed;
 }
 
 
@@ -11,6 +12,7 @@ body{
     text-align: center;
     font-size: 5rem;
     color: transparent;
+    padding-bottom: 2rem;
     -moz-text-stroke-width: 2px;
     -webkit-text-stroke-width: 2px;
     -moz-text-stroke-color: #000000;
@@ -60,6 +62,10 @@ body{
     background-color: #f0f0f04b; 
 }
 
+.input-email:focus-visible, .input-password:focus-visible{
+    background-color: #f0f0f04b;
+}
+
 .input-email, .input-password :focus{
     background-color: #f0f0f04b;
 }
@@ -67,4 +73,8 @@ body{
 
 .form-label{
     color: black;
+}
+
+.btn-iniciar-sesion{
+    margin-bottom: 10px;
 }

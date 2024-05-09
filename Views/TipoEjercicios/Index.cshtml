@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="~/css/tipoEjercicios.css">
 
 
+
 <h1 class="t-stroke t-shadow">TIPO DE EJERCICIOS!</h1>
+
 
 <!-- Button Modal -->
 <div class="mb-2">
@@ -23,7 +25,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="ModalTipoEjercicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="ModalTipoEjercicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -34,13 +36,13 @@
         <form>
           <div class="mb-3">
             <input type="hidden" id="TipoEjercicioID" value="0"/>
-            <label for="descripcion" class="form-label">Descripción</label>
-            <input type="text" class="form-control" id="descripcion" style="text-transform: uppercase;" placeholder="Nombre del tipo de actividad">
+            <label for="descripcion" class="form-label">DESCRIPCIÓN</label>
+            <input type="text" class="form-control" id="descripcion" placeholder="Nombre del tipo de actividad">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="LimpiarModal()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" onclick="LimpiarModal()" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" onclick="GuardarRegistro()" class="btn btn-primary">Guardar</button>
       </div>
     </div>

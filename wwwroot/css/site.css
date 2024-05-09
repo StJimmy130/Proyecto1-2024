@@ -32,7 +32,7 @@ html{
   position: fixed;
   left: -350px;
   width: 350px;
-  height: 110vh;
+  height: 100vh;
   top: -3px;
   background-color: #042331;
   transition: all .5s ease;
@@ -89,6 +89,7 @@ html{
 
 .labelCheck #open {
   left: 40px;
+  z-index: 1;
   top: 25px;
   font-size: 25px;
   color: white;
@@ -135,7 +136,7 @@ html{
 .headTabla{
   border: white;
   background: rgb(0,226,121);
-  background: radial-gradient(circle, rgba(0,226,121,.7) 20%, rgba(0,0,0,.8) 91%);
+  background: radial-gradient(circle, rgba(9, 87, 51, 0.658) 20%, rgba(0,0,0,.8) 91%);
   color: white;
   font-size: 18px;
 }
@@ -144,7 +145,7 @@ html{
 .bodyTabla{
   color: white;
   background: rgb(0,226,121);
-  background: radial-gradient(circle, rgba(0,226,121,.7) 20%, rgba(0,0,0,.8) 91%);
+  background: radial-gradient(circle, rgba(7, 124, 70, 0.658) 20%, rgba(0,0,0,.8) 91%);
   font-weight: lighter;
   font-size: 15px;
 }

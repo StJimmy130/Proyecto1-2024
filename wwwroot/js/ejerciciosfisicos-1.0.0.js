@@ -90,7 +90,7 @@ $.ajax({
 
 
 function NuevoRegistro(){
-    $("#ModalTitulo").text("Nuevo tipo de ejercicio")
+    $("#ModalTitulo").text("NUEVO TIPO DE EJERCICIO")
 }
 
 

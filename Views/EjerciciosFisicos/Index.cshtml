@@ -35,36 +35,35 @@
         <form id="FormEjercicioFisico">
           <input type="hidden" id="ejercicioFisicoID" value="0">
           <div class="dropdown">
-            <label for="TipoEjercicioID">Seleccione tipo de ejercicio:</label>
+            <label for="TipoEjercicioID">SELECCIONE EL TIPO DE EJERCICIO:</label>
             @Html.DropDownList("tipoEjercicioID", null, htmlAttributes: new { @class = "form-control" })
           </div>
           <div class="form-group">
-            <label for="inicio">Inicio:</label>
-            <input type="datetime-local"  id="inicio" name="inicio">
+            <label for="inicio">INICIO:</label>
+            <div>
+              <input type="datetime-local" class="calendario" id="inicio" name="inicio">
+            </div>
           </div>
           <div class="form-group">
-            <label for="fin">Fin:</label>
-            <input type="datetime-local" id="fin" name="fin">
+            <label for="fin">FIN:</label>
+            <div>
+              <input type="datetime-local" class="calendario" id="fin" name="fin">
+            </div>
           </div>
           <div class="dropdown">
-            <label for="estadoEmocionalInicio">Seleccione estado emocional al iniciar:</label>
+            <label for="estadoEmocionalInicio">Al iniciar:</label>
             <select class="form-select" id="estadoEmocionalInicio"></select>
-          </div>
-          <div class="dropdown">
-            <label for="estadoEmocionalFin">Seleccione estado emocional al finalizar:</label>
-            <select class="form-select" id="estadoEmocionalFin">
-              <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
-            </select>
+            <label for="estadoEmocionalFin">Al finalizar:</label>
+            <select class="form-select" id="estadoEmocionalFin"></select>
           </div>
           <div class="form-group">
-            <label for="observaciones">Observaciones:</label>
-            <textarea id="observaciones" style="text-transform: uppercase;" name="observaciones" rows="4"></textarea>
+            <textarea id="observaciones" placeholder="OBSERVACIONES" class="textArea" name="observaciones" rows="4"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="LimpiarModal()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" onclick="GuardarEjerciciosFisicos()" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+        <button type="button" onclick="LimpiarModal()" class="btn btn-cancel btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" onclick="GuardarEjerciciosFisicos()" class="btn btn-save btn-outline-primary" data-bs-dismiss="modal">Guardar</button>
       </div>
     </div>
   </div>

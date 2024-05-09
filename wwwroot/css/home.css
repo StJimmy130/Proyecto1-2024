@@ -2,7 +2,7 @@ body{
     background-image: url(../img/fondo.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-
+    background-image: fixed;
 }
 
 .t-stroke {
@@ -10,6 +10,7 @@ body{
     text-align: center;
     font-size: 5rem;
     color: transparent;
+    padding-bottom: 2rem;
     -moz-text-stroke-width: 2px;
     -webkit-text-stroke-width: 2px;
     -moz-text-stroke-color: #000000;
@@ -45,14 +46,147 @@ body{
 .intro{
     text-align: left;
     color: white;
-    font-size: 20px;
+    font-size: 23px;
     font-family: 'Times New Roman', Times, serif;
     font-style: italic;
     font-weight: lighter;
-    margin-top: 150px;
+    margin-top: 100px;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     padding: 10px;
     width: 700px;
 }
+
+.intro2{
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: lighter;
+    margin-top: 130px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    padding: 10px;
+    width: 800px;
+}
+
+
+
+
+.btn-login-home {
+    --color: #00A97F;
+    --color2: rgb(255, 255, 255);
+    padding: 0.8em 1.75em;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: transparent;
+    border-radius: 6px;
+    border: .3px solid var(--color);
+    transition: .5s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 17px;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    color: var(--color);
+   }
+   
+   .btn-login-home::after, .btn-login-home::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: skew(90deg) translate(-50%, -50%);
+    position: absolute;
+    inset: 50%;
+    left: 25%;
+    z-index: -1;
+    transition: .5s ease-out;
+    background-color: var(--color);
+   }
+   
+   .btn-login-home::before {
+    top: -50%;
+    left: -25%;
+    transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+   }
+   
+   .btn-login-home:hover::before {
+    transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+   }
+   
+   .btn-login-home:hover::after {
+    transform: skew(45deg) translate(-50%, -50%);
+   }
+   
+   .btn-login-home:hover {
+    color: var(--color2);
+   }
+   
+   .btn-login-home:active {
+    filter: brightness(.7);
+    transform: scale(.98);
+   }
+
+
+   .btn-register-home {
+    --color: #0079a9;
+    --color2: rgb(255, 255, 255);
+    padding: 0.8em 1.75em;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: transparent;
+    border-radius: 6px;
+    border: .3px solid var(--color);
+    transition: .5s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 17px;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    color: var(--color);
+   }
+   
+   .btn-register-home::after, .btn-register-home::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: skew(90deg) translate(-50%, -50%);
+    position: absolute;
+    inset: 50%;
+    left: 25%;
+    z-index: -1;
+    transition: .5s ease-out;
+    background-color: var(--color);
+   }
+   
+   .btn-register-home::before {
+    top: -50%;
+    left: -25%;
+    transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+   }
+   
+   .btn-register-home:hover::before {
+    transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+   }
+   
+   .btn-register-home:hover::after {
+    transform: skew(45deg) translate(-50%, -50%);
+   }
+   
+   .btn-register-home:hover {
+    color: var(--color2);
+   }
+   
+   .btn-register-home:active {
+    filter: brightness(.7);
+    transform: scale(.98);
+   }

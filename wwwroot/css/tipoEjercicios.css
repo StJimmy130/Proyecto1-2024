@@ -2,14 +2,15 @@ body{
     background-image: url(../img/Fondo3.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-image: fixed;
 }
-
 
 .t-stroke {
     position: relative;
     text-align: center;
     font-size: 5rem;
     color: transparent;
+    padding-bottom: 2rem;
     -moz-text-stroke-width: 2px;
     -webkit-text-stroke-width: 2px;
     -moz-text-stroke-color: #000000;
@@ -40,6 +41,54 @@ body{
     top: 6px;
     z-index: -1;
     transition: all 0.5s ease;
+}
+
+.modal{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: -40px;
+}
+
+.modal-content{
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 1px solid white;
+    
+}
+
+.modal-header{
+    background-color: rgba(124, 124, 124, 0.479);
+    color: white;
+    padding-bottom: 20px;
+}
+
+.btn-close{
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.301);
+}
+
+.modal-footer{
+    background-color: rgba(126, 126, 126, 0.322);
+    color: white;
+    padding-top: 20px;
+}
+
+.form-control{
+    background-color: rgba(126, 126, 126, 0.322);
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+}
+
+.form-control:focus-visible{
+    background-color: rgba(126, 126, 126, 0.322);
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
 }
 
 .buttonAdd {
@@ -134,3 +183,10 @@ body{
     font-size: 22px;
     font-weight: 1200;
 }
+
+.custom-modal{
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #3d3a4e;
+
+}
+
