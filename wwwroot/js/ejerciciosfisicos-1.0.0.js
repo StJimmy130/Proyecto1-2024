@@ -157,7 +157,11 @@ function ListadoEjerciciosFisicos(){
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
-            alert('Disculpe, existió un problema al cargar la lista de ejercicios');
+            Swal.fire({
+                title: "Disculpe",
+                text: "existió un problema al cargar la lista de ejercicios.",
+                icon: "warning",
+            });
         }
     });
 }
@@ -191,12 +195,16 @@ function GuardarEjerciciosFisicos(){
         success: function(resultado) 
         {
             if(resultado != ""){
-                alert(resultado);
+                swal.fire(resultado);
             }
             ListadoEjerciciosFisicos()
         },
         error: function(xhr, status) {
-            console.log('Disculpe, existió un problema al guardar el registro');
+            Swal.fire({
+                title: "Disculpe",
+                text: "existió un problema al al guardar el registro.",
+                icon: "warning",
+            });
         }
     });
 }
@@ -249,7 +257,11 @@ function EliminarRegistro(ejercicioFisicoID){
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
-            console.log('Disculpe, existió un problema al eliminar el registro.');
+            Swal.fire({
+                title: "Disculpe",
+                text: "existió un problema al eliminar el registro.",
+                icon: "warning",
+            });
         }
     });    
 
@@ -289,7 +301,11 @@ function AbrirModalEditar(ejercicioFisicoID){
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
-            console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
+            Swal.fire({
+                title: "Disculpe",
+                text: "existió un problema al consultar el registro para ser modificado.",
+                icon: "warning",
+            });
         }
     });
 }

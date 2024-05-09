@@ -190,3 +190,53 @@ body{
 
 }
 
+
+
+.tablaTipoEjercicios{
+    color: white;
+    border-radius: 15px;
+    width: 60%;
+    margin: auto;
+    justify-content: center;
+    margin-left: 150px;
+    margin-top: 40px;
+    border: 1px solid white;
+  }
+  
+  .headTabla{
+    border: white;
+    background: rgb(0,226,121);
+    background: radial-gradient(circle, rgba(9, 87, 51, 0.658) 20%, rgba(0,0,0,.8) 91%);
+    color: white;
+    font-size: 18px;
+    width: 60%;
+  }
+  
+  
+  .bodyTabla{
+    color: white;
+    background: rgb(0,226,121);
+    background: radial-gradient(circle, rgba(7, 124, 70, 0.658) 20%, rgba(0,0,0,.8) 91%);
+    font-weight: lighter;
+    font-size: 15px;
+    width: 60%;
+  }
+  
+  
+  .tablaDescripcion{
+    vertical-align: middle;
+    font-weight: bolder;
+  }
+  
+  .botonTabla{
+    font-size: 16px;
+    vertical-align: center;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+  }
+  /* ICONOS BORRAR Y MODIFICAR */
+  .iconoBM{
+    margin: auto;
+    margin-right: 3px;
+  }

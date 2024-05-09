@@ -96,6 +96,11 @@ body{
     color: var(--color);
    }
    
+   .btn-login-home a{
+    color: inherit;
+    text-decoration: none;
+   }
+
    .btn-login-home::after, .btn-login-home::before {
     content: '';
     display: block;
@@ -189,4 +194,9 @@ body{
    .btn-register-home:active {
     filter: brightness(.7);
     transform: scale(.98);
+   }
+
+   .btn-register-home a{
+    color: inherit;
+    text-decoration: none;
    }

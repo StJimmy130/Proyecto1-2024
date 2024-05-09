@@ -231,3 +231,53 @@ transform: scaleX(1);
   font-size: 22px;
   font-weight: 800;
 }
+
+
+.tablaEjerciciosFisicos{
+  color: white;
+  border-radius: 15px;
+  width: 100%;
+  margin: auto;
+  justify-content: center;
+  margin-top: 40px;
+  border: 1px solid white;
+}
+
+.headTabla{
+  border: white;
+  background: radial-gradient(circle, rgba(14, 141, 82, 0.767) 20%, rgba(0,0,0,.8) 91%);
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  text-align: center;
+
+}
+
+
+.bodyTabla{
+  color: white;
+  background: radial-gradient(circle, rgba(0, 134, 72, 0.623) 20%, rgba(0,0,0,.8) 91%);
+  font-weight: lighter;
+  font-size: 16px;
+  text-align: center;
+
+}
+
+
+.tablaDescripcion{
+  vertical-align: middle;
+  font-weight: bolder;
+}
+
+.botonTabla{
+  font-size: 16px;
+  vertical-align: center;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+/* ICONOS BORRAR Y MODIFICAR */
+.iconoBM{
+  margin: auto;
+  margin-right: 3px;
+}
