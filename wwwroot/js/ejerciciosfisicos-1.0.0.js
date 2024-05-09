@@ -1,4 +1,4 @@
-Window.onload = ListadoEjerciciosFisicos();
+window.onload = ListadoEjerciciosFisicos();
 
 // Función para cargar opciones de estado emocional en un dropdown
 function CargarOpcionesEstadoEmocional(data, dropdownID) {

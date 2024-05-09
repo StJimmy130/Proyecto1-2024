@@ -56,6 +56,7 @@ public class TipoEjerciciosController : Controller
                     };
                     _context.Add(tipoEjercicio);
                     _context.SaveChanges();
+                    resultado = "Tipo de ejercicio guardado correctamente";
                 }
                 else{
                     resultado = "YA EXISTE UN REGISTRO CON LA MISMA DESCRIPCIÓN";

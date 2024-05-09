@@ -1,6 +1,4 @@
-const { default: Swal } = require("sweetalert2");
-
-Window.onload = ListadoTipoEjercicios();
+window.onload = ListadoTipoEjercicios();
 
 
 function ListadoTipoEjercicios(){
