@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Proyecto1_2024.Controllers;
 
-//[Authorize]
+[Authorize]
 public class TipoEjerciciosController : Controller
 {
     private ApplicationDbContext _context;

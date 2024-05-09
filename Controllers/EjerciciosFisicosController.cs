@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Proyecto1_2024.Controllers;
 
-//[Authorize]
+[Authorize]
 public class EjerciciosFisicosController : Controller
 {
     private ApplicationDbContext _context;
