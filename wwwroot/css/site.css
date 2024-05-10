@@ -76,6 +76,7 @@ html{
 
 .btnLogout{
   text-decoration: none;
+  border: none;
   background-color: #042331;
   display: block;
   width: 100%;
