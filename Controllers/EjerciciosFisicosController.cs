@@ -24,12 +24,20 @@ public class EjerciciosFisicosController : Controller
         var tipoEjercicios = _context.TipoEjercicios.ToList();
         tipoEjercicios.Add(new TipoEjercicio{TipoEjercicioID = 0, Descripcion = "[SELECCIONE...]"});
         ViewBag.TipoEjercicioID = new SelectList(tipoEjercicios.OrderBy(c => c.Descripcion), "TipoEjercicioID", "Descripcion");
+        
+        
+        var tipoEjerciciosFiltrar = _context.TipoEjercicios.ToList();
+        tipoEjerciciosFiltrar.Add(new TipoEjercicio{TipoEjercicioID = 0, Descripcion = "[TODOS]"});
+        ViewBag.TipoEjercicioFiltrarID = new SelectList(tipoEjerciciosFiltrar.OrderBy(c => c.Descripcion), "TipoEjercicioID", "Descripcion");
+        
+        
+        
         return View();
     }
 
     
 
-    public JsonResult ListadoTipoEjerciciosFisicos(int? id)
+    public JsonResult ListadoTipoEjerciciosFisicos(int? id, int tipoEjercicioFiltrarID, DateTime? fechaDesde, DateTime? fechaHasta)
     {
         List<VistaEjercicioFisico> ejerciciosFisicosMostrar = new List<VistaEjercicioFisico>();
         
@@ -37,7 +45,16 @@ public class EjerciciosFisicosController : Controller
 
         if (id != null)
         {
-            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.TipoEjercicioID == id).ToList();    
+            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.EjercicioFisicoID == id).ToList();    
+        }
+
+        if (fechaDesde != null && fechaHasta != null)
+        {
+            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.Inicio >= fechaDesde && t.Inicio <= fechaHasta).ToList();
+        }
+        if (tipoEjercicioFiltrarID != 0)
+        {
+            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.TipoEjercicioID == tipoEjercicioFiltrarID).ToList();
         }
 
         var tiposEjercicios = _context.TipoEjercicios.ToList();
@@ -103,47 +120,65 @@ public class EjerciciosFisicosController : Controller
     {
         string resultado = "";
 
-        if (ejercicioFisicoID != null)
+        // Validar que todos los campos obligatorios estén presentes
+        if (tipoEjercicioID == 0 || inicio == default || fin == default || estadoEmocionalInicio == 0 || estadoEmocionalFin == 0)
         {
-            // Verificar si el ejercicio físico es nuevo o existente
-            if (ejercicioFisicoID == 0)
+            resultado = "Todos los campos son obligatorios";
+        }
+        else if (!FechasValidas(inicio, fin))
+        {
+            resultado = "La fecha de fin debe ser posterior a la fecha de inicio.";
+        }
+        else
+        {
+            if (ejercicioFisicoID != null)
             {
-                // Crear un nuevo objeto "EjercicioFisico" y guardarlo en la base de datos
-                var ejercicioFisico = new EjercicioFisico
+                // Verificar si el ejercicio físico es nuevo o existente
+                if (ejercicioFisicoID == 0)
                 {
-                    EjercicioFisicoID = ejercicioFisicoID,
-                    TipoEjercicioID = tipoEjercicioID,
-                    Inicio = inicio,
-                    Fin = fin,
-                    EstadoEmocionalInicio = estadoEmocionalInicio,
-                    EstadoEmocionalFin = estadoEmocionalFin,
-                    Observaciones = observaciones
-                };
-                _context.Add(ejercicioFisico);
-                _context.SaveChanges();
-                
-                resultado = "Ejercicio físico guardado correctamente";
-            }
-            else
-            {
-                // Obtener un ejercicio físico existente en la base de datos y editarlo
-                var ejercicioFisicoEditar = _context.EjerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).SingleOrDefault();
-                if (ejercicioFisicoEditar != null)
-                {
-                    ejercicioFisicoEditar.TipoEjercicioID = tipoEjercicioID;
-                    ejercicioFisicoEditar.Inicio = inicio;
-                    ejercicioFisicoEditar.Fin = fin;
-                    ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
-                    ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
-                    ejercicioFisicoEditar.Observaciones = observaciones;
+                    // Crear un nuevo objeto "EjercicioFisico" y guardarlo en la base de datos
+                    var ejercicioFisico = new EjercicioFisico
+                    {
+                        EjercicioFisicoID = ejercicioFisicoID,
+                        TipoEjercicioID = tipoEjercicioID,
+                        Inicio = inicio,
+                        Fin = fin,
+                        EstadoEmocionalInicio = estadoEmocionalInicio,
+                        EstadoEmocionalFin = estadoEmocionalFin,
+                        Observaciones = observaciones
+                    };
+                    _context.Add(ejercicioFisico);
                     _context.SaveChanges();
                     
-                    resultado = "Ejercicio físico actualizado correctamente";
+                    resultado = "Ejercicio físico guardado correctamente";
+                }
+                else
+                {
+                    // Obtener un ejercicio físico existente en la base de datos y editarlo
+                    var ejercicioFisicoEditar = _context.EjerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).SingleOrDefault();
+                    if (ejercicioFisicoEditar != null)
+                    {
+                        ejercicioFisicoEditar.TipoEjercicioID = tipoEjercicioID;
+                        ejercicioFisicoEditar.Inicio = inicio;
+                        ejercicioFisicoEditar.Fin = fin;
+                        ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
+                        ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
+                        ejercicioFisicoEditar.Observaciones = observaciones;
+                        _context.SaveChanges();
+                        
+                        resultado = "Ejercicio físico actualizado correctamente";
+                    }
                 }
             }
         }
         // Devolver el resultado de la operación en formato JSON
         return Json(resultado);
+    }
+
+    private bool FechasValidas(DateTime inicio, DateTime fin)
+    {
+        // Verificar que la fecha de fin sea posterior a la fecha de inicio
+        return inicio < fin;
     }
 
 

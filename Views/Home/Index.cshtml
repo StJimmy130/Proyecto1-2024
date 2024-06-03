@@ -1,16 +1,23 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <link rel="stylesheet" href="~/css/home.css">
 
 
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <h1 class="t-stroke t-shadow">WORKOUT WATCH!</h1>
+  </div>
+</div>
 
-<h1 class="t-stroke t-shadow">WORKOUT WATCH!</h1>
 
 
 <div class="row">
-  <div class="col-12">
+  <div class="col-lg-7 col-md-9 col-sm-12">
     <p class="intro">Bienvenido a Workout Watch! Tu guía personal para un estilo de vida más activo y saludable. Registra tus
     entrenamientos, sigue tu progreso y alcanza tus metas fitness con facilidad. Con Workout Watch!, cada paso cuenta.
     ¡Empieza hoy mismo y lleva tu entrenamiento al siguiente nivel!</p>
@@ -19,11 +26,17 @@
 </div>
 
 
-<div class="div-btn">
-  <button class="btn-login-home" asp-area="Identity" asp-page="/Account/Login">
-    <a asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
-  </button>
-  <button class="btn-register-home" asp-area="Identity" asp-page="/Account/Register">
-    <a  asp-area="Identity" asp-page="/Account/Register">Registrate!</a>
-  </button>
-</div>
+
+
+@if(!SignInManager.IsSignedIn(User))
+{
+  <div class="div-btn">  
+    <button class="btn-login-home" asp-area="Identity" asp-page="/Account/Login">
+      <a asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
+    </button>
+    <button class="btn-register-home" asp-area="Identity" asp-page="/Account/Register">
+      <a  asp-area="Identity" asp-page="/Account/Register">Registrate!</a>
+    </button>
+  </div> 
+}  
+

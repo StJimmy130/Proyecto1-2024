@@ -104,6 +104,77 @@ function LimpiarModal(){
     document.getElementById("observaciones").value = ""
 }
 
+
+function FiltrarEjerciciosFisicos(){
+    let fechaDesde = document.getElementById("fechaDesde").value;
+    let fechaHasta = document.getElementById("fechaHasta").value;
+    let tipoEjercicioFiltrarID = document.getElementById("tipoEjercicioFiltrarID").value;
+    $.ajax({
+        // la URL para la petición
+        url: '../../EjerciciosFisicos/ListadoTipoEjerciciosFisicos',
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: { 
+            fechaDesde: fechaDesde,
+            fechaHasta: fechaHasta,
+            tipoEjercicioFiltrarID: tipoEjercicioFiltrarID,
+        },
+        // especifica si será una petición POST o GET
+        type: 'POST',
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (ejerciciosFisicos) {
+
+            $("#ModalEjercicioFisico").modal("hide");
+            LimpiarModal()
+            //$("#tbody-tipoejercicios").empty();
+            let contenidoTabla = ``;
+
+            $.each(ejerciciosFisicos, function (index, ejercicioFisico) {  
+                
+                contenidoTabla += `
+                <tr>
+                    <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioDescripcion}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.fechaInicioString}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalFin}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.observaciones}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-secondary botonTabla" title="Editar Registro" onclick="AbrirModalEditar(${ejercicioFisico.ejercicioFisicoID})">
+                            <i class="bi bi-pencil-square iconoBM"></i>Editar
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger botonTabla" title="Eliminar Registro" onclick="ValidacionEliminar(${ejercicioFisico.ejercicioFisicoID})">
+                            <i class="bi bi-trash3 iconoBM"></i>Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `;
+
+            });
+
+            document.getElementById("tbody-ejerciciosfisicos").innerHTML = contenidoTabla;
+
+        },
+
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            Swal.fire({
+                title: "Disculpe",
+                text: "existió un problema al cargar la lista de ejercicios.",
+                icon: "warning",
+            });
+        }
+    });
+}
+
+
 function ListadoEjerciciosFisicos(){
     $.ajax({
         // la URL para la petición

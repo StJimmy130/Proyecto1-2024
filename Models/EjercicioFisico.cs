@@ -10,6 +10,10 @@ namespace Proyecto1_2024.Models
         public int TipoEjercicioID { get; set; }
         public DateTime Inicio { get; set; }
         public DateTime Fin { get; set; }
+
+        [NotMapped]
+        public TimeSpan IntervaloEjercicio { get {return Fin - Inicio;} }
+        
         public EstadoEmocional EstadoEmocionalInicio { get; set; }
         public EstadoEmocional EstadoEmocionalFin { get; set; }
         public string? Observaciones { get; set; }
@@ -48,6 +52,8 @@ namespace Proyecto1_2024.Models
         Satisfecho,
         Desanimado
     }
+
+
 
     public class VistaEstadoEmocional
     {
