@@ -1,5 +1,18 @@
 window.onload = GraficoTorta();
 
+
+document.addEventListener('DOMContentLoaded', function() {
+  var today = new Date();
+  var currentMonth = today.getMonth() + 1; // Los meses en JavaScript son 0-11
+  var currentYear = today.getFullYear();
+
+  var monthSelect = document.getElementById('MesEjercicioBuscar');
+  var yearSelect = document.getElementById('AnioEjercicioBuscar');
+
+  monthSelect.value = currentMonth;
+  yearSelect.value = currentYear;
+});
+
 let graficoEjercicio;
 let graficoTortaEjercicio;
 
@@ -167,39 +180,4 @@ function GenerarColor() {
   let colorHex = `#${rr.toString(16).padStart(2, '0')}${gg.toString(16).padStart(2, '0')}${bb.toString(16).padStart(2, '0')}`;
   return colorHex;
 }
-
-
-// function GenerarColor(gama) {
-//   let rr, gg, bb;
-
-//   switch (gama) {
-//     case 'verde':
-//       rr = Math.floor(Math.random() * 128); // 0 a 127
-//       gg = Math.floor(Math.random() * 128) + 128; // 128 a 255
-//       bb = Math.floor(Math.random() * 128); // 0 a 127
-//       break;
-//     case 'azul':
-//       rr = Math.floor(Math.random() * 128); // 0 a 127
-//       gg = Math.floor(Math.random() * 128); // 0 a 127
-//       bb = Math.floor(Math.random() * 128) + 128; // 128 a 255
-//       break;
-//     case 'violeta':
-//       rr = Math.floor(Math.random() * 128) + 128; // 128 a 255
-//       gg = Math.floor(Math.random() * 128); // 0 a 127
-//       bb = Math.floor(Math.random() * 128) + 128; // 128 a 255
-//       break;
-//     case 'rojo':
-//       rr = Math.floor(Math.random() * 128) + 128; // 128 a 255
-//       gg = Math.floor(Math.random() * 128); // 0 a 127
-//       bb = Math.floor(Math.random() * 128); // 0 a 127
-//       break;
-//     default:
-//       throw new Error('Gama no soportada');
-//   }
-
-//   // Convertimos a hexadecimal y formateamos para que tenga siempre dos dígitos.
-//   let colorHex = `#${rr.toString(16).padStart(2, '0')}${gg.toString(16).padStart(2, '0')}${bb.toString(16).padStart(2, '0')}`;
-//   return colorHex;
-// }
-
 
