@@ -5,6 +5,12 @@ body{
     background-image: fixed;
 }
 
+.ejerciciosContainer{
+  background-color: #9f9f9fcf;
+  padding: 15px;
+  border-radius: 5px;
+}
+
 
 .t-stroke {
   position: relative;

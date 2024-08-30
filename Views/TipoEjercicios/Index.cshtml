@@ -9,19 +9,32 @@
 
 
 <!-- Button Modal -->
-<div class="mb-2">
-    <button type="button" title="Click para Agregar un Ejercicio" class="buttonAdd" 
-    onclick="NuevoRegistro()" data-bs-toggle="modal" data-bs-target="#ModalTipoEjercicio">
+<div>
+  <div class="mb-2">
+    <button type="button" title="Click para Agregar un Ejercicio" class="buttonAdd" onclick="NuevoRegistro()"
+      data-bs-toggle="modal" data-bs-target="#ModalTipoEjercicio">
       <span class="button-content">
-        <i class="bi bi-plus-square iconosAddRefresh" ></i> Agregar Registro
+        <i class="bi bi-plus-square iconosAddRefresh"></i> Agregar Registro
       </span>
-    </button>    
+    </button>
     <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoTipoEjercicios()" class="buttonRefresh">
       <span class="button-content">
         <i class="bi bi-arrow-clockwise iconosAddRefresh"></i> Refrescar Tabla
       </span>
     </button>
+  </div>
+  <table class="table tablaTipoEjercicios">
+    <thead class="headTabla">
+      <tr>
+        <th>EJERCICIO</th>
+        <th class="text-center" style="width: 70px;">EDITAR</th>
+        <th class="text-center" style="width: 40px;">ELIMINAR</th>
+      </tr>
+    </thead>
+    <tbody class="bodyTabla" id="tbody-tipoejercicios"></tbody>
+  </table>
 </div>
+
 
 
 <!-- Modal -->
@@ -35,14 +48,15 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <input type="hidden" id="TipoEjercicioID" value="0"/>
+            <input type="hidden" id="TipoEjercicioID" value="0" />
             <label for="descripcion" class="form-label">DESCRIPCIÓN</label>
             <input type="text" class="form-control" id="descripcion" placeholder="Nombre del tipo de actividad">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="LimpiarModal()" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" onclick="LimpiarModal()" class="btn btn-outline-danger"
+          data-bs-dismiss="modal">Cancelar</button>
         <button type="button" onclick="GuardarRegistro()" class="btn btn-outline-primary">Guardar</button>
       </div>
     </div>
@@ -50,18 +64,9 @@
 </div>
 
 
-<table class="table tablaTipoEjercicios">
-  <thead class="headTabla">
-    <tr>
-      <th>EJERCICIO</th>
-      <th class="text-center" style="width: 70px;">EDITAR</th>
-      <th class="text-center" style="width: 40px;">ELIMINAR</th>
-    </tr>
-  </thead>
-  <tbody class="bodyTabla" id="tbody-tipoejercicios"></tbody>
-</table>
 
 
-@section Scripts{
+
+@section Scripts {
   <script src="~/js/tipoejercicios-1.0.0.js"></script>
 }

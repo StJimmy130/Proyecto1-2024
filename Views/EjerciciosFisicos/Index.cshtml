@@ -12,22 +12,66 @@
 </div>
 
 
+<div class="ejerciciosContainer">
+  <div class="mb-2">
+    <button type="button" title="Click para Agregar un Ejercicio Físico" class="buttonAdd" onclick="NuevoRegistro()"
+      data-bs-toggle="modal" data-bs-target="#ModalEjercicioFisico">
+      <span class="button-content">
+        <i class="fa-solid fa-plus iconosAddRefresh"></i> Agregar Registro
+      </span>
+    </button>
+    <button type="button" title="Click para Agregar un Ejercicio Físico" class="buttonRefresh"
+      onclick="ListadoEjerciciosFisicos()">
+      <span class="button-content">
+        <i class="fa-solid fa-arrows-rotate iconosAddRefresh"></i> Refrescar
+      </span>
+    </button>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <label for="fechaDesde">DESDE:</label>
+      <input type="datetime-local" class="form-control calendario" id="fechaDesde"
+        value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+    </div>
+    <div class="col-md-4">
+      <label for="fechaHasta">HASTA:</label>
+      <input type="datetime-local" class="form-control calendario" id="fechaHasta"
+        value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+    </div>
+    <div class="col-md-4">
+      <label for="tipoEjercicioFiltrarID">SELECCIONE EL TIPO DE EJERCICIO:</label>
+      @Html.DropDownList("tipoEjercicioFiltrarID", null, htmlAttributes: new { @class = "form-control" })
+    </div>
 
-
-<div class="mb-2">
-  <button type="button" title="Click para Agregar un Ejercicio Físico" class="buttonAdd" onclick="NuevoRegistro()"
-    data-bs-toggle="modal" data-bs-target="#ModalEjercicioFisico">
-    <span class="button-content">
-      <i class="fa-solid fa-plus iconosAddRefresh"></i> Agregar Registro
-    </span>
-  </button>
-  <button type="button" title="Click para Agregar un Ejercicio Físico" class="buttonRefresh"
-    onclick="ListadoEjerciciosFisicos()">
-    <span class="button-content">
-      <i class="fa-solid fa-arrows-rotate iconosAddRefresh"></i> Refrescar
-    </span>
-  </button>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 text-center">
+      <button type="button" title="Click para filtrar" class="buttonRefresh" onclick="FiltrarEjerciciosFisicos()">
+        <span class="button-content">
+          <i class="fa-solid fa-magnifying-glass iconosAddRefresh"></i> Filtrar
+        </span>
+      </button>
+    </div>
+  </div>
+  <table class="table tablaEjerciciosFisicos">
+    <thead class="headTabla">
+      <tr>
+        <th>EJERCICIO</th>
+        <th>INICIO</th>
+        <th>FIN</th>
+        <th>AL INICIAR:</th>
+        <th>AL FINALIZAR:</th>
+        <th>OBSERVACIONES</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="bodyTabla" id="tbody-ejerciciosfisicos"></tbody>
+  </table>
 </div>
+
+
+
 
 
 <div class="modal fade" id="ModalEjercicioFisico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -47,13 +91,15 @@
           <div class="form-group">
             <label for="inicio">INICIO:</label>
             <div>
-              <input type="datetime-local" class="calendario form-control" id="inicio" name="inicio" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+              <input type="datetime-local" class="calendario form-control" id="inicio" name="inicio"
+                value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
             </div>
           </div>
           <div class="form-group">
             <label for="fin">FIN:</label>
             <div>
-              <input type="datetime-local" class="calendario form-control" id="fin" name="fin" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+              <input type="datetime-local" class="calendario form-control" id="fin" name="fin"
+                value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
             </div>
           </div>
           <div class="dropdown">
@@ -78,46 +124,9 @@
   </div>
 </div>
 
-<div class="row mt-3">
-  <div class="col-md-4">
-    <label for="fechaDesde">DESDE:</label>
-    <input type="datetime-local" class="form-control calendario" id="fechaDesde" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
-  </div>
-  <div class="col-md-4">
-    <label for="fechaHasta">HASTA:</label>
-    <input type="datetime-local" class="form-control calendario" id="fechaHasta" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
-  </div>
-  <div class="col-md-4">
-    <label for="tipoEjercicioFiltrarID">SELECCIONE EL TIPO DE EJERCICIO:</label>
-    @Html.DropDownList("tipoEjercicioFiltrarID", null, htmlAttributes: new { @class = "form-control" })
-  </div>
-  
-</div>
-<div class="row mt-3">
-  <div class="col-md-12 text-center">
-    <button type="button" title="Click para filtrar" class="buttonRefresh" onclick="FiltrarEjerciciosFisicos()">
-      <span class="button-content">
-        <i class="fa-solid fa-magnifying-glass iconosAddRefresh"></i> Filtrar
-      </span>
-    </button>
-  </div>
-</div>
 
-<table class="table tablaEjerciciosFisicos">
-  <thead class="headTabla">
-    <tr>
-      <th>EJERCICIO</th>
-      <th>INICIO</th>
-      <th>FIN</th>
-      <th>AL INICIAR:</th>
-      <th>AL FINALIZAR:</th>
-      <th>OBSERVACIONES</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody class="bodyTabla" id="tbody-ejerciciosfisicos"></tbody>
-</table>
+
+
 
 @section Scripts {
   <script src="~/js/ejerciciosfisicos-1.0.0.js"></script>

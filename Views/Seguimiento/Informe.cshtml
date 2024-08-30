@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-3">
+    <label for="BuscarInicioActividad" class="form-label">Inicio de la actividad</label>
+    <input type="datetime-local" id="BuscarInicioActividad" class="form-control" />
+  </div>
+  <div class="col-md-3">
+    <label for="BuscarFinActividad" class="form-label">Fin de la actividad</label>
+    <input type="datetime-local" id="BuscarFinActividad" class="form-control" />
+  </div>
+</div>
+<div class="mt-2 p-1">
+  <button type="button" class="btn btn-primary" onclick="ListadoInforme()">
+    Buscar
+  </button>
+</div>
+
+<table class="table tablaEjerciciosFisicos">
+  <thead class="headTabla">
+    <tr>
+      <th>Tipo Ejercicio</th>
+      <th>INICIO</th>
+      <th>FIN</th>
+      <th>Duracion</th>
+      <th>AL INICIAR:</th>
+      <th>AL FINALIZAR:</th>
+      <th>OBSERVACIONES</th>
+    </tr>
+  </thead>
+  <tbody class="bodyTabla" id="tbody-ejerciciosportipo"></tbody>
+</table>
+
+@section Scripts {
+  <script src="~/js/informe.js"></script>
+}

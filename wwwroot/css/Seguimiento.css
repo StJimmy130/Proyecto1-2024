@@ -1,45 +1,48 @@
-body{
-    background-image: url(../img/fondo.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: fixed;
+body {
+  background-image: url(../img/fondo.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: fixed;
 }
 
-
+.seguimientoContainer {
+  background-color: #9f9f9fcf;
+  padding: 15px;
+  border-radius: 5px;
+}
 .t-stroke {
-    position: relative;
-    text-align: center;
-    font-size: 5rem;
-    color: transparent;
-    padding-bottom: 2rem;
-    -moz-text-stroke-width: 2px;
-    -webkit-text-stroke-width: 2px;
-    -moz-text-stroke-color: #000000;
-    -webkit-text-stroke-color: #ffffff;
+  position: relative;
+  text-align: center;
+  font-size: 5rem;
+  color: transparent;
+  padding-bottom: 2rem;
+  -moz-text-stroke-width: 2px;
+  -webkit-text-stroke-width: 2px;
+  -moz-text-stroke-color: #000000;
+  -webkit-text-stroke-color: #ffffff;
 }
 
 .t-shadow {
-    position: relative;
+  position: relative;
 }
 
 .t-shadow::after {
-    content: "SEGUIMIENTO!";
-    font-size: 5rem;
-    letter-spacing: 0px;
-    background: url(../img/fondoTitulo2.jpg) 50% 47%
-    repeat;
-    background-size: 150%;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -moz-text-stroke-width: 0;
-    -webkit-text-stroke-width: 0;
-    position: absolute;
-    text-align: center;
-    left: 8px;
-    right: 0;
-    top: 6px;
-    z-index: -1;
-    transition: all 0.5s ease;
+  content: "SEGUIMIENTO!";
+  font-size: 5rem;
+  letter-spacing: 0px;
+  background: url(../img/fondoTitulo2.jpg) 50% 47% repeat;
+  background-size: 150%;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -moz-text-stroke-width: 0;
+  -webkit-text-stroke-width: 0;
+  position: absolute;
+  text-align: center;
+  left: 8px;
+  right: 0;
+  top: 6px;
+  z-index: -1;
+  transition: all 0.5s ease;
 }

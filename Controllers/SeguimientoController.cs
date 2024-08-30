@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using SQLitePCL;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Proyecto1_2024.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Proyecto1_2024.Controllers;
 
@@ -99,4 +100,68 @@ public class SeguimientoController : Controller
 
         return Json (vistaTipoEjercicioFisico);
     }
+
+
+
+
+
+
+    public IActionResult Informe()
+    {
+        
+
+
+        return View();
+    }
+
+public JsonResult ListadoInforme(int? id, DateTime? BuscarInicioActividad, DateTime? BuscarFinActividad)
+{
+    List<VistaEjercicioFisico> ejerciciosFisicosMostrar = new List<VistaEjercicioFisico>();
+
+    // Obtener la lista de ejercicios físicos
+    var ejerciciosFisicos = _context.EjerciciosFisicos.AsQueryable();
+
+    // Aplicar filtro por ID si se proporciona
+    if (id != null)
+    {
+        ejerciciosFisicos = ejerciciosFisicos.Where(t => t.EjercicioFisicoID == id);
+    }
+
+    // Aplicar filtro por rango de fechas si se proporcionan
+    if (BuscarInicioActividad != null && BuscarFinActividad != null)
+    {
+        ejerciciosFisicos = ejerciciosFisicos.Where(e => e.Inicio >= BuscarInicioActividad && e.Inicio <= BuscarFinActividad);
+    }
+
+    // Ordenar los ejercicios por la fecha de inicio
+    ejerciciosFisicos = ejerciciosFisicos.OrderBy(e => e.Inicio);
+
+    // Obtener la lista de tipos de ejercicios
+    var tiposEjercicios = _context.TipoEjercicios.ToList();
+
+    // Construir la lista de VistaEjercicioFisico para mostrar
+    foreach (var ejercicioFisico in ejerciciosFisicos)
+    {
+        var tipoEjercicio = tiposEjercicios.Single(t => t.TipoEjercicioID == ejercicioFisico.TipoEjercicioID);
+
+        var ejercicioFisicosMostrar = new VistaEjercicioFisico
+        {
+            EjercicioFisicoID = ejercicioFisico.EjercicioFisicoID,
+            TipoEjercicioID = ejercicioFisico.TipoEjercicioID,
+            TipoEjercicioDescripcion = tipoEjercicio.Descripcion,
+            FechaInicioString = ejercicioFisico.Inicio.ToString("dd/MM/yyyy HH:mm"),
+            FechaFinString = ejercicioFisico.Fin.ToString("dd/MM/yyyy HH:mm"),
+            IntervaloEjercicio = Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes),
+            EstadoEmocionalInicio = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalInicio),
+            EstadoEmocionalFin = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalFin),
+            Observaciones = ejercicioFisico.Observaciones
+        };
+        ejerciciosFisicosMostrar.Add(ejercicioFisicosMostrar);
+    }
+
+    // Retornar los resultados en formato JSON
+    return Json(ejerciciosFisicosMostrar);
+}
+
+
 }
