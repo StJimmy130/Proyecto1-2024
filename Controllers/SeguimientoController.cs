@@ -108,9 +108,6 @@ public class SeguimientoController : Controller
 
     public IActionResult Informe()
     {
-        
-
-
         return View();
     }
 

@@ -12,8 +12,8 @@ using Proyecto1_2024.Data;
 namespace Proyecto1_2024.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240605003147_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20240903232305_TablaLugares")]
+    partial class TablaLugares
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,6 +247,9 @@ namespace Proyecto1_2024.Migrations
                     b.Property<DateTime>("Inicio")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("LugarID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Observaciones")
                         .HasColumnType("nvarchar(max)");
 
@@ -255,9 +258,27 @@ namespace Proyecto1_2024.Migrations
 
                     b.HasKey("EjercicioFisicoID");
 
+                    b.HasIndex("LugarID");
+
                     b.HasIndex("TipoEjercicioID");
 
                     b.ToTable("EjerciciosFisicos");
+                });
+
+            modelBuilder.Entity("Proyecto1_2024.Models.Lugar", b =>
+                {
+                    b.Property<int>("LugarID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LugarID"));
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LugarID");
+
+                    b.ToTable("Lugares");
                 });
 
             modelBuilder.Entity("Proyecto1_2024.Models.TipoEjercicio", b =>
@@ -332,13 +353,26 @@ namespace Proyecto1_2024.Migrations
 
             modelBuilder.Entity("Proyecto1_2024.Models.EjercicioFisico", b =>
                 {
+                    b.HasOne("Proyecto1_2024.Models.Lugar", "Lugares")
+                        .WithMany("EjerciciosFisicos")
+                        .HasForeignKey("LugarID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Proyecto1_2024.Models.TipoEjercicio", "TipoEjercicios")
                         .WithMany("EjerciciosFisicos")
                         .HasForeignKey("TipoEjercicioID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Lugares");
+
                     b.Navigation("TipoEjercicios");
+                });
+
+            modelBuilder.Entity("Proyecto1_2024.Models.Lugar", b =>
+                {
+                    b.Navigation("EjerciciosFisicos");
                 });
 
             modelBuilder.Entity("Proyecto1_2024.Models.TipoEjercicio", b =>

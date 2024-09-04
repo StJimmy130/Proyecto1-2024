@@ -1,0 +1,75 @@
+@{
+  ViewData["Title"] = "Lugares";
+}
+
+
+
+<link rel="stylesheet" href="~/css/lugares.css">
+
+
+
+<h1 class="t-stroke t-shadow">LUGARES!</h1>
+
+
+<!-- Button Modal -->
+<div>
+  <div class="mb-2">
+    <button type="button" title="Click para Agregar un lugar" class="buttonAdd" onclick="NuevoRegistro()"
+      data-bs-toggle="modal" data-bs-target="#ModalLugares">
+      <span class="button-content">
+        <i class="bi bi-plus-square iconosAddRefresh"></i> Agregar Registro
+      </span>
+    </button>
+    <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoLugares()" class="buttonRefresh">
+      <span class="button-content">
+        <i class="bi bi-arrow-clockwise iconosAddRefresh"></i> Refrescar Tabla
+      </span>
+    </button>
+  </div>
+  <table class="table tablaLugares">
+    <thead class="headTabla">
+      <tr>
+        <th>LUGAR</th>
+        <th class="text-center" style="width: 70px;">EDITAR</th>
+        <th class="text-center" style="width: 40px;">ELIMINAR</th>
+      </tr>
+    </thead>
+    <tbody class="bodyTabla" id="tbody-lugares"></tbody>
+  </table>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal" id="ModalLugares" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitulo"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <input type="hidden" id="LugarID" value="0" />
+            <label for="Nombre" class="form-label">Nombre del lugar</label>
+            <input type="text" class="form-control" id="Nombre" placeholder="Nombre del lugar">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="LimpiarModal()" class="btn btn-outline-danger"
+          data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" onclick="GuardarRegistro()" class="btn btn-outline-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+@section Scripts {
+  <script src="~/js/lugares.js"></script>
+}

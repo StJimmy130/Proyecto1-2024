@@ -48,44 +48,6 @@ $.ajax({
 
 
 
-// Función para cargar opciones en un dropdown desde los datos obtenidos del servidor
-// function CargarOpcionesTipoDeEjercicios(data, dropdownID) {
-//     const dropdown = $(`#${dropdownID}`);
-//     dropdown.empty();
-
-//     // Agregar la opción "Seleccionar" al principio del dropdown
-//     dropdown.append(`<option value="" disabled selected>Seleccionar</option>`);
-
-//     // Si hay datos disponibles, agregar opciones al dropdown
-//     if (data && data.length > 0) {
-//         data.forEach(item => {
-//             dropdown.append(`<option value="${item.tipoEjercicioID}">${item.descripcion}</option>`);
-//         });
-//     } else {
-//         // Si no hay datos disponibles, mostrar un mensaje en el dropdown
-//         dropdown.append(`<option value="">No se encontraron valores</option>`);
-//     }
-// }
-
-// // Realizar la petición AJAX para obtener los tipos de ejercicios al iniciar
-// $.ajax({
-//     url: '/EjerciciosFisicos/ListaEjerciciosFisicos',
-//     type: 'GET',
-//     dataType: 'json',
-//     success: function(data) {
-//         CargarOpcionesTipoDeEjercicios(data, 'selectTipoEjercicio');
-//     },
-//     error: function(xhr, status, error) {
-//         console.error('Error al obtener los tipos de ejercicios:', error);
-//         $('#selectTipoEjercicio').append(`<option value="">Error al obtener los tipos de ejercicios</option>`);
-//     }
-// });
-
-
-
-
-// HASTA ACÁ NO TENQUES NADA
-
 
 
 
@@ -97,6 +59,7 @@ function NuevoRegistro(){
 function LimpiarModal(){
     document.getElementById("ejercicioFisicoID").value = 0;
     document.getElementById("tipoEjercicioID").value = 0;
+    document.getElementById("LugarID").value = 0;
     document.getElementById("inicio").value = "";
     document.getElementById("fin").value = "";
     document.getElementById("estadoEmocionalInicio").value = 0;
@@ -137,6 +100,7 @@ function FiltrarEjerciciosFisicos(){
                 contenidoTabla += `
                 <tr>
                     <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioDescripcion}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.lugarString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaInicioString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
@@ -200,6 +164,7 @@ function ListadoEjerciciosFisicos(){
                 contenidoTabla += `
                 <tr>
                     <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioDescripcion}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.lugarString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaInicioString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
@@ -242,6 +207,7 @@ function GuardarEjerciciosFisicos(){
     // GUARDAMOS EN VARIABLES LOS VALORES INGRESADOS EN EL FORMULARIO
     let ejercicioFisicoID = document.getElementById("ejercicioFisicoID").value;
     let tipoEjercicioID = document.getElementById("tipoEjercicioID").value;
+    let lugarID = document.getElementById("LugarID").value;
     let inicio = document.getElementById("inicio").value;
     let fin = document.getElementById("fin").value;
     let estadoEmocionalInicio = document.getElementById("estadoEmocionalInicio").value;
@@ -255,6 +221,7 @@ function GuardarEjerciciosFisicos(){
         data: { 
             ejercicioFisicoID: ejercicioFisicoID,
             tipoEjercicioID: tipoEjercicioID,
+            lugarID: lugarID,
             inicio: inicio,
             fin: fin,
             estadoEmocionalInicio: estadoEmocionalInicio,
@@ -359,6 +326,7 @@ function AbrirModalEditar(ejercicioFisicoID){
             document.getElementById("ejercicioFisicoID").value = ejercicioFisicoID;
             $("#ModalTitulo").text("Editar Tipo de Ejercicio");
             document.getElementById("tipoEjercicioID").value = ejerciciosFisicos.tipoEjercicioID;
+            document.getElementById("LugarID").value = ejerciciosFisicos.lugarID;
             document.getElementById("inicio").value = ejerciciosFisicos.inicio;
             document.getElementById("fin").value = ejerciciosFisicos.fin;
             document.getElementById("estadoEmocionalInicio").value = ejerciciosFisicos.estadoEmocionalInicio;

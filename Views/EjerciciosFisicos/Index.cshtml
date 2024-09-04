@@ -57,6 +57,7 @@
     <thead class="headTabla">
       <tr>
         <th>EJERCICIO</th>
+        <th>LUGAR</th>
         <th>INICIO</th>
         <th>FIN</th>
         <th>AL INICIAR:</th>
@@ -87,6 +88,10 @@
           <div class="dropdown">
             <label for="TipoEjercicioID">SELECCIONE EL TIPO DE EJERCICIO:</label>
             @Html.DropDownList("tipoEjercicioID", null, htmlAttributes: new { @class = "form-control" })
+          </div>
+          <div class="dropdown">
+            <label for="LugarID">SELECCIONE EL LUGAR:</label>
+            @Html.DropDownList("LugarID", null, htmlAttributes: new { @class = "form-control" })
           </div>
           <div class="form-group">
             <label for="inicio">INICIO:</label>
