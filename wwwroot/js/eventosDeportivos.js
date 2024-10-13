@@ -1,48 +1,47 @@
-window.onload = ListadoTipoEjercicios();
+window.onload = ListadoEventosDeportivos();
 
 
-function ListadoTipoEjercicios() {
+function ListadoEventosDeportivos() {
     $.ajax({
-        url: '../../TipoEjercicios/ListadoTipoEjercicios',
+        url: '../../EventosDeportivos/ListadoEventosDeportivos',
         type: 'POST',
         dataType: 'json',
-        success: function (tipoDeEjercicios) {
-            $("#ModalTipoEjercicio").modal("hide");
+        success: function (EventosDeportivos) {
+            $("#ModalEventosDeportivos").modal("hide");
             LimpiarModal();
             let contenidoTabla = ``;
 
-            $.each(tipoDeEjercicios, function (index, tipoDeEjercicio) {
-                // Verifica el estado de "Eliminado" para decidir qué mostrar
-                let estadoBoton = tipoDeEjercicio.eliminado ? 
-                    `<button type="button" class="btn btn-success botonTabla" title="Activar Registro" onclick="EliminarRegistro(${tipoDeEjercicio.tipoEjercicioID})">
+            $.each(EventosDeportivos, function (index, eventoDeportivo) {  
+                // Verifica el estado de "Eliminado" para decidir qué botones mostrar
+                let estadoBoton = eventoDeportivo.eliminado ? 
+                    `<button type="button" class="btn btn-success botonTabla" title="Activar Registro" onclick="EliminarRegistro(${eventoDeportivo.eventoDeportivoID}, false)">
                         <i class="bi bi-check-circle iconoBM"></i>Reactivar
                     </button>` :
-                    `<button type="button" class="btn btn-warning botonTabla" onclick="EliminarRegistro(${tipoDeEjercicio.tipoEjercicioID})">
+                    `<button type="button" class="btn btn-warning botonTabla" title="Desactivar Registro" onclick="EliminarRegistro(${eventoDeportivo.eventoDeportivoID}, true)">
                         <i class="bi bi-trash iconoBM"></i>Desactivar
                     </button>`;
 
-                let filaClase = tipoDeEjercicio.eliminado ? "table-dark" : ""; // Clase de Bootstrap para color gris
+                let filaClase = eventoDeportivo.eliminado ? "table-dark" : ""; // Clase de Bootstrap para color gris
 
-                // Si el tipo de ejercicio está eliminado, no se muestra el botón de editar
-                let editarBoton = tipoDeEjercicio.eliminado ? "" : 
-                    `<button type="button" class="btn btn-secondary botonTabla" title="Editar Registro" onclick="AbrirModalEditar(${tipoDeEjercicio.tipoEjercicioID})">
+                // Si el evento está eliminado, no se muestra el botón de editar
+                let editarBoton = eventoDeportivo.eliminado ? "" : 
+                    `<button type="button" class="btn btn-secondary botonTabla" title="Editar Registro" onclick="AbrirModalEditar(${eventoDeportivo.eventoDeportivoID})">
                         <i class="bi bi-pencil-square iconoBM"></i>Editar
                     </button>`;
 
                 contenidoTabla += `
                 <tr class="${filaClase}">
-                    <td class="tablaDescripcion">${tipoDeEjercicio.descripcion}</td>
+                    <td class="tablaDescripcion">${eventoDeportivo.descripcion}</td>
                     <td class="text-center">
                         ${editarBoton}
                     </td>
                     <td class="text-center">
-                        ${estadoBoton} 
+                        ${estadoBoton}
                     </td>
                 </tr>`;
             });
 
-            document.getElementById("tbody-tipoejercicios").innerHTML = contenidoTabla;
-
+            document.getElementById("tbody-eventosDeportivos").innerHTML = contenidoTabla;
         },
         error: function (xhr, status) {
             Swal.fire({
@@ -54,38 +53,37 @@ function ListadoTipoEjercicios() {
     });
 }
 
-
 function LimpiarModal(){
-    document.getElementById("TipoEjercicioID").value = 0;
-    document.getElementById("descripcion").value = "";
+    document.getElementById("EventoDeportivoID").value = 0;
+    document.getElementById("Descripcion").value = "";
 }
 
 function NuevoRegistro(){
-    $("#ModalTitulo").text("NUEVO TIPO DE EJERCICIO")
+    $("#ModalTitulo").text("NUEVO EVENTO DEPORTIVO")
 }
 
 
 
-function AbrirModalEditar(tipoEjercicioID){
+function AbrirModalEditar(eventoDeportivoID){
     $.ajax({
         // la URL para la petición
-        url: '../../TipoEjercicios/ListadoTipoEjercicios',
+        url: '../../EventosDeportivos/ListadoEventosDeportivos',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
-        data: { id: tipoEjercicioID},
+        data: { id: eventoDeportivoID},
         // especifica si será una petición POST o GET
         type: 'POST',
         // el tipo de información que se espera de respuesta
         dataType: 'json',
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
-        success: function (tipoDeEjercicios) {
-            let tipoDeEjercicio = tipoDeEjercicios[0];
+        success: function (eventoDeportivo) {
+            let eventoDeportivoEditar = eventoDeportivo[0];
 
-            document.getElementById("TipoEjercicioID").value = tipoEjercicioID;
-            $("#ModalTitulo").text("Editar Tipo de Ejercicio");
-            document.getElementById("descripcion").value = tipoDeEjercicio.descripcion;
-            $("#ModalTipoEjercicio").modal("show");
+            document.getElementById("EventoDeportivoID").value = eventoDeportivoID;
+            $("#ModalTitulo").text("Editar evento deportivo");
+            document.getElementById("Descripcion").value = eventoDeportivoEditar.descripcion;
+            $("#ModalEventosDeportivos").modal("show");
         },
 
         // código a ejecutar si la petición falla;
@@ -104,19 +102,19 @@ function AbrirModalEditar(tipoEjercicioID){
 
 function GuardarRegistro(){
     //GUARDAMOS EN UNA VARIABLE LO ESCRITO EN EL INPUT DESCRIPCION
-    let tipoEjercicioID = document.getElementById("TipoEjercicioID").value;
-    let descripcion = document.getElementById("descripcion").value;
+    let eventoDeportivoID = document.getElementById("EventoDeportivoID").value;
+    let descripcion = document.getElementById("Descripcion").value;
     //POR UN LADO PROGRAMAR VERIFICACIONES DE DATOS EN EL FRONT CUANDO 
     //SON DE INGRESO DE Y NO SE NECESITA VERIFICAR EN BASE DE DATOS.
     //LUEGO POR OTRO LADO HACER VERIFICACIÓN DE DATOS EN EL BACK,
     //SI EXISTE EL ELEMENTO SI NECESITAMOS BASE DE DATOS.
     $.ajax({
         // la URL para la petición
-        url: '../../TipoEjercicios/GuardarTipoEjercicio',
+        url: '../../EventosDeportivos/GuardarEventoDeportivo',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
         data: { 
-            tipoEjercicioID: tipoEjercicioID, 
+            eventoDeportivoID: eventoDeportivoID, 
             descripcion: descripcion
         },
         // especifica si será una petición POST o GET
@@ -130,7 +128,7 @@ function GuardarRegistro(){
             if(resultado != ""){
                 Swal.fire(resultado);
             }
-            ListadoTipoEjercicios();
+            ListadoEventosDeportivos();
         },
 
         // código a ejecutar si la petición falla;
@@ -146,14 +144,14 @@ function GuardarRegistro(){
     });    
 }
 
-function EliminarRegistro(tipoEjercicioID) {
+function EliminarRegistro(eventoDeportivoID) {
     $.ajax({
-        url: '../../TipoEjercicios/ListadoTipoEjercicios',
-        data: { tipoEjercicioID },
+        url: '../../EventosDeportivos/ListadoEventosDeportivos',
+        data: { eventoDeportivoID },
         type: 'GET',
         dataType: 'json',
-        success: function (tipoEjercicio) {
-            const nuevoEstado = !tipoEjercicio.eliminado; // Cambiar estado al opuesto
+        success: function (eventoDeportivo) {
+            const nuevoEstado = !eventoDeportivo.eliminado; // Cambiar estado al opuesto
 
             // Mensaje ambigüo
             const titulo = "¿Estás seguro de cambiar el estado?";
@@ -171,7 +169,7 @@ function EliminarRegistro(tipoEjercicioID) {
                 confirmButtonText: "Sí, cambiar estado"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    cambiarEstado(tipoEjercicioID, nuevoEstado);
+                    cambiarEstado(eventoDeportivoID, nuevoEstado);
                 }
             });
         },
@@ -185,10 +183,10 @@ function EliminarRegistro(tipoEjercicioID) {
     });
 }
 
-function cambiarEstado(tipoEjercicioID, nuevoEstado) {
+function cambiarEstado(eventoDeportivoID, nuevoEstado) {
     $.ajax({
-        url: '../../TipoEjercicios/EliminarTipoEjercicio',
-        data: { tipoEjercicioID, nuevoEstado },
+        url: '../../EventosDeportivos/EliminarEventoDeportivo',
+        data: { eventoDeportivoID, nuevoEstado },
         type: 'POST',
         dataType: 'json',
         success: function (resultado) {
@@ -201,14 +199,14 @@ function cambiarEstado(tipoEjercicioID, nuevoEstado) {
                 });
             } else {
                 // Mostrar el estado final sin especificar si fue activado o desactivado
-                const mensajeFinal = "El estado del tipo de ejercicio ha sido cambiado.";
+                const mensajeFinal = "El estado del evento deportivo ha sido cambiado.";
                 Swal.fire({
                     title: "Estado actualizado",
                     text: mensajeFinal,
                     icon: "success",
                 });
             }
-            ListadoTipoEjercicios(); 
+            ListadoEventosDeportivos(); 
         },
         error: function () {
             Swal.fire({

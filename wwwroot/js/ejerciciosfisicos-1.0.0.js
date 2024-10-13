@@ -52,7 +52,7 @@ $.ajax({
 
 
 function NuevoRegistro(){
-    $("#ModalTitulo").text("NUEVO TIPO DE EJERCICIO")
+    $("#ModalTitulo").text("NUEVO EJERCICIO")
 }
 
 
@@ -60,6 +60,7 @@ function LimpiarModal(){
     document.getElementById("ejercicioFisicoID").value = 0;
     document.getElementById("tipoEjercicioID").value = 0;
     document.getElementById("LugarID").value = 0;
+    document.getElementById("EventoDeportivoID").value = 0;
     document.getElementById("inicio").value = "";
     document.getElementById("fin").value = "";
     document.getElementById("estadoEmocionalInicio").value = 0;
@@ -101,6 +102,7 @@ function FiltrarEjerciciosFisicos(){
                 <tr>
                     <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioDescripcion}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.lugarString}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.eventoDeportivoString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaInicioString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
@@ -165,6 +167,7 @@ function ListadoEjerciciosFisicos(){
                 <tr>
                     <td class="tablaDescripcion">${ejercicioFisico.tipoEjercicioDescripcion}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.lugarString}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.eventoDeportivoString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaInicioString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
@@ -208,6 +211,7 @@ function GuardarEjerciciosFisicos(){
     let ejercicioFisicoID = document.getElementById("ejercicioFisicoID").value;
     let tipoEjercicioID = document.getElementById("tipoEjercicioID").value;
     let lugarID = document.getElementById("LugarID").value;
+    let eventoDeportivoID = document.getElementById("EventoDeportivoID").value;
     let inicio = document.getElementById("inicio").value;
     let fin = document.getElementById("fin").value;
     let estadoEmocionalInicio = document.getElementById("estadoEmocionalInicio").value;
@@ -222,6 +226,7 @@ function GuardarEjerciciosFisicos(){
             ejercicioFisicoID: ejercicioFisicoID,
             tipoEjercicioID: tipoEjercicioID,
             lugarID: lugarID,
+            eventoDeportivoID: eventoDeportivoID,
             inicio: inicio,
             fin: fin,
             estadoEmocionalInicio: estadoEmocionalInicio,
@@ -308,6 +313,7 @@ function EliminarRegistro(ejercicioFisicoID){
 
 
 function AbrirModalEditar(ejercicioFisicoID){
+    console.log("ID recibido:", ejercicioFisicoID);
     $.ajax({
         // la URL para la petición
         url: '../../EjerciciosFisicos/EjerciciosFisicos',
@@ -324,15 +330,16 @@ function AbrirModalEditar(ejercicioFisicoID){
             let ejerciciosFisicos = ejercicioFisico[0];
 
             document.getElementById("ejercicioFisicoID").value = ejercicioFisicoID;
-            $("#ModalTitulo").text("Editar Tipo de Ejercicio");
             document.getElementById("tipoEjercicioID").value = ejerciciosFisicos.tipoEjercicioID;
             document.getElementById("LugarID").value = ejerciciosFisicos.lugarID;
+            document.getElementById("EventoDeportivoID").value = ejerciciosFisicos.eventoDeportivoID;
             document.getElementById("inicio").value = ejerciciosFisicos.inicio;
             document.getElementById("fin").value = ejerciciosFisicos.fin;
             document.getElementById("estadoEmocionalInicio").value = ejerciciosFisicos.estadoEmocionalInicio;
             document.getElementById("estadoEmocionalFin").value = ejerciciosFisicos.estadoEmocionalFin;
             document.getElementById("observaciones").value = ejerciciosFisicos.observaciones;
-
+            
+            $("#ModalTitulo").text("Editar ejercicio físico");
             $("#ModalEjercicioFisico").modal("show");
         },
 

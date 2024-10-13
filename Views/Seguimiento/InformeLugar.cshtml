@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="~/css/ejerciciosFisicos.css">
 
 <div class="row">
@@ -11,7 +12,7 @@
   </div>
 </div>
 <div class="mt-2 p-1">
-  <button type="button" class="btn btn-primary" onclick="ListadoInforme()">
+  <button type="button" class="btn btn-primary" onclick="ListadoInformePorLugar()">
     Buscar
   </button>
 </div>
@@ -19,18 +20,17 @@
 <table class="table table-primary table-striped">
   <thead class="headTabla">
     <tr>
-      <th>Tipo Ejercicio</th>
-      <th>INICIO</th>
-      <th>FIN</th>
+      <th>Lugar</th>
+      <th>Inicio</th>
+      <th>Fin</th>
       <th>Duracion</th>
-      <th>AL INICIAR:</th>
-      <th>AL FINALIZAR:</th>
-      <th>OBSERVACIONES</th>
+      <th>Ejercicio realizado</th>
+      <th>Observaciones</th>
     </tr>
   </thead>
-  <tbody class="bodyTabla" id="tbody-ejerciciosportipo"></tbody>
+  <tbody class="bodyTabla" id="tbody-ejerciciosPorLugar"></tbody>
 </table>
 
 @section Scripts {
-  <script src="~/js/informe.js"></script>
+  <script src="~/js/informePorLugar.js"></script>
 }

@@ -60,14 +60,21 @@
                 <a asp-controller="TipoEjercicios" asp-action="Index"><i class="fa-solid fa-dumbbell"></i>Tipo de Ejercicios</a>
             </li>
             <li>
-                <a asp-controller="Lugares" asp-action="Index">Lugares</a>
+                <a asp-controller="Lugares" asp-action="Index"><i class="fa-solid fa-map-location-dot"></i>Lugares</a>
+            </li>
+            <li>
+                <a asp-controller="EventosDeportivos" asp-action="Index"><i class="fa-regular fa-calendar-minus"></i>Eventos deportivos</a>
             </li>
             <li>
                 <a asp-controller="EjerciciosFisicos" asp-action="Index"><i class="fa-solid fa-stopwatch-20"></i>Ejercicios Físicos</a>
             </li>
             <li>
-                <a asp-controller="Seguimiento" asp-action="Informe">Informe</a>
+                <a asp-controller="Seguimiento" asp-action="Informe"><i class="fa-solid fa-database"></i>Informe</a>
             </li>
+            <li>
+                <a asp-controller="Seguimiento" asp-action="InformeLugar"><i class="fa-solid fa-database"></i>Informe lugar</a>
+            </li>
+            
             <footer class="footerSidebar">
                 <partial class="footerSidebar" name="_LoginPartial" />
             </footer>

@@ -1,23 +1,28 @@
-﻿@{
-  ViewData["Title"] = "Tipo de Ejercicios";
+@{
+  ViewData["Title"] = "Lugares";
 }
+
+
+
+<link rel="stylesheet" href="~/css/lugares.css">
 <link rel="stylesheet" href="~/css/tipoEjercicios.css">
 
 
 
-<h1 class="t-stroke1 t-shadow1">TIPO DE EJERCICIOS!</h1>
+
+<h1 class="t-stroke3 t-shadow3">EVENTOS DEPORTIVOS!</h1>
 
 
 <!-- Button Modal -->
 <div>
   <div class="mb-2">
-    <button type="button" title="Click para Agregar un Ejercicio" class="buttonAdd" onclick="NuevoRegistro()"
-      data-bs-toggle="modal" data-bs-target="#ModalTipoEjercicio">
+    <button type="button" title="Click para Agregar un evento deportivo" class="buttonAdd" onclick="NuevoRegistro()"
+      data-bs-toggle="modal" data-bs-target="#ModalEventosDeportivos">
       <span class="button-content">
         <i class="bi bi-plus-square iconosAddRefresh"></i> Agregar Registro
       </span>
     </button>
-    <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoTipoEjercicios()" class="buttonRefresh">
+    <button type="button" title="Click para Refrescar la Tabla" onclick="ListadoEventosDeportivos()" class="buttonRefresh">
       <span class="button-content">
         <i class="bi bi-arrow-clockwise iconosAddRefresh"></i> Refrescar Tabla
       </span>
@@ -26,19 +31,19 @@
   <table class="table table-primary table-striped">
     <thead class="headTabla">
       <tr>
-        <th>EJERCICIO</th>
+        <th>EVENTO DEPORTIVO</th>
         <th class="text-center" style="width: 70px;">EDITAR</th>
         <th class="text-center" style="width: 40px;">ELIMINAR</th>
       </tr>
     </thead>
-    <tbody class="bodyTabla" id="tbody-tipoejercicios"></tbody>
+    <tbody class="bodyTabla" id="tbody-eventosDeportivos"></tbody>
   </table>
 </div>
 
 
 
 <!-- Modal -->
-<div class="modal" id="ModalTipoEjercicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="ModalEventosDeportivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -48,9 +53,9 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <input type="hidden" id="TipoEjercicioID" value="0" />
-            <label for="descripcion" class="form-label">DESCRIPCIÓN</label>
-            <input type="text" class="form-control" id="descripcion" placeholder="Nombre del tipo de actividad">
+            <input type="hidden" id="EventoDeportivoID" value="0" />
+            <label for="Descripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="Descripcion" placeholder="Evento deportivo...">
           </div>
         </form>
       </div>
@@ -68,5 +73,5 @@
 
 
 @section Scripts {
-  <script src="~/js/tipoejercicios-1.0.0.js"></script>
+  <script src="~/js/eventosDeportivos.js"></script>
 }

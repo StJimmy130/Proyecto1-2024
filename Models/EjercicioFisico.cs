@@ -8,6 +8,7 @@ namespace Proyecto1_2024.Models
         [Key]
         public int EjercicioFisicoID { get; set; }
         public int TipoEjercicioID { get; set; }
+        public int EventoDeportivoID { get; set; }
         public int LugarID { get; set; }
         public DateTime Inicio { get; set; }
         public DateTime Fin { get; set; }
@@ -20,15 +21,18 @@ namespace Proyecto1_2024.Models
         public string? Observaciones { get; set; }
         public virtual TipoEjercicio TipoEjercicios { get; set; }
         public virtual Lugar Lugares { get; set; }
+        public virtual EventoDeportivo EventosDeportivos { get; set; }
     }
 
 public class VistaEjercicioFisico
 {
     public int EjercicioFisicoID { get; set; }
     public int TipoEjercicioID { get; set; }
+    public int EventoDeportivoID { get; set; }
     public int LugarID { get; set; }
     public string? TipoEjercicioDescripcion { get; set; }
     public string? LugarString { get; set; }
+    public string? EventoDeportivoString { get; set; }
     public string? FechaInicioString { get; set; }
     public string? FechaFinString { get; set; }
     public decimal IntervaloEjercicio { get; set; }

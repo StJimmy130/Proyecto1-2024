@@ -21,36 +21,42 @@ public class EjerciciosFisicosController : Controller
 
     public IActionResult Index()
     {
-        var tipoEjercicios = _context.TipoEjercicios.ToList();
-        tipoEjercicios.Add(new TipoEjercicio{TipoEjercicioID = 0, Descripcion = "[SELECCIONE...]"});
+
+        var tipoEjercicios = _context.TipoEjercicios.Where(te => !te.Eliminado).ToList();
+        tipoEjercicios.Add(new TipoEjercicio { TipoEjercicioID = 0, Descripcion = "[SELECCIONE...]" });
         ViewBag.TipoEjercicioID = new SelectList(tipoEjercicios.OrderBy(c => c.Descripcion), "TipoEjercicioID", "Descripcion");
-        
+
 
         var lugares = _context.Lugares.ToList();
-        lugares.Add(new Lugar{LugarID = 0, Nombre = "[SELECCIONE...]"});
-        ViewBag.LugarID = new SelectList(lugares.OrderBy(c => c.Nombre), "LugarID", "Nombre");
-        
-        
+        lugares.Add(new Lugar { LugarID = 0, Nombre = "[SELECCIONE...]" });
+        ViewBag.lugarID = new SelectList(lugares.OrderBy(c => c.Nombre), "LugarID", "Nombre");
+
+
+
+        var eventosDeportivos = _context.EventosDeportivos.Where(ed => !ed.Eliminado).ToList();
+        eventosDeportivos.Add(new EventoDeportivo { EventoDeportivoID = 0, Descripcion = "[SELECCIONE...]" });
+        ViewBag.EventoDeportivoID = new SelectList(eventosDeportivos.OrderBy(c => c.Descripcion), "EventoDeportivoID", "Descripcion");
+
         var tipoEjerciciosFiltrar = _context.TipoEjercicios.ToList();
-        tipoEjerciciosFiltrar.Add(new TipoEjercicio{TipoEjercicioID = 0, Descripcion = "[TODOS]"});
+        tipoEjerciciosFiltrar.Add(new TipoEjercicio { TipoEjercicioID = 0, Descripcion = "[TODOS]" });
         ViewBag.TipoEjercicioFiltrarID = new SelectList(tipoEjerciciosFiltrar.OrderBy(c => c.Descripcion), "TipoEjercicioID", "Descripcion");
-        
-        
-        
+
+
+
         return View();
     }
 
-    
+
 
     public JsonResult ListadoTipoEjerciciosFisicos(int? id, int tipoEjercicioFiltrarID, DateTime? fechaDesde, DateTime? fechaHasta)
     {
         List<VistaEjercicioFisico> ejerciciosFisicosMostrar = new List<VistaEjercicioFisico>();
-        
+
         var ejerciciosFisicos = _context.EjerciciosFisicos.ToList();
 
         if (id != null)
         {
-            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.EjercicioFisicoID == id).ToList();    
+            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.EjercicioFisicoID == id).ToList();
         }
 
         if (fechaDesde != null && fechaHasta != null)
@@ -64,19 +70,23 @@ public class EjerciciosFisicosController : Controller
 
         var tiposEjercicios = _context.TipoEjercicios.ToList();
         var lugares = _context.Lugares.ToList();
+        var eventosDeportivos = _context.EventosDeportivos.ToList();
 
         foreach (var ejercicioFisico in ejerciciosFisicos)
         {
             var tipoEjercicio = tiposEjercicios.Where(t => t.TipoEjercicioID == ejercicioFisico.TipoEjercicioID).Single();
             var lugar = lugares.Where(t => t.LugarID == ejercicioFisico.LugarID).Single();
+            var eventoDeportivo = eventosDeportivos.Where(t => t.EventoDeportivoID == ejercicioFisico.EventoDeportivoID).Single();
 
             var ejercicioFisicoMostrar = new VistaEjercicioFisico
             {
                 EjercicioFisicoID = ejercicioFisico.EjercicioFisicoID,
                 TipoEjercicioID = ejercicioFisico.TipoEjercicioID,
                 LugarID = ejercicioFisico.LugarID,
+                EventoDeportivoID = ejercicioFisico.EventoDeportivoID,
                 TipoEjercicioDescripcion = tipoEjercicio.Descripcion,
                 LugarString = lugar.Nombre,
+                EventoDeportivoString = eventoDeportivo.Descripcion,
                 FechaInicioString = ejercicioFisico.Inicio.ToString("dd/MM/yyyy HH:mm"),
                 FechaFinString = ejercicioFisico.Fin.ToString("dd/MM/yyyy HH:mm"),
                 EstadoEmocionalInicio = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalInicio),
@@ -88,29 +98,30 @@ public class EjerciciosFisicosController : Controller
 
         return Json(ejerciciosFisicosMostrar);
     }
-    
-    
+
+
     public JsonResult EjerciciosFisicos(int? id)
     {
         //DEFINIMOS UNA VARIABLE EN DONDE GUARDAMOS EL LISTADO COMPLETO DE TIPOS DE EJERCICIOS
         var ejerciciosFisicos = _context.EjerciciosFisicos.ToList();
-        
+
         //LUEGO PREGUNTAMOS SI EL USUARIO INGRESO UN ID
         //QUIERE DECIR QUE QUIERE UN EJERCICIO EN PARTICULAR
         if (id != null)
         {
-        //FILTRAMOS EL LISTADO COMPLETO DE EJERCICIOS POR EL EJERCICIO QUE COINCIDA CON ESE ID
-            ejerciciosFisicos = ejerciciosFisicos.Where(e => e.EjercicioFisicoID == id).ToList();    
+            //FILTRAMOS EL LISTADO COMPLETO DE EJERCICIOS POR EL EJERCICIO QUE COINCIDA CON ESE ID
+            ejerciciosFisicos = ejerciciosFisicos.Where(e => e.EjercicioFisicoID == id).ToList();
         }
 
-        return Json(ejerciciosFisicos.ToList());
+        return Json(ejerciciosFisicos);
     }
-    
+
+
 
 
     public JsonResult ObtenerEstadoEmocionalEnum()
     {
-        List<VistaEstadoEmocional> estadosEmocionalesMostrar= new List<VistaEstadoEmocional>();
+        List<VistaEstadoEmocional> estadosEmocionalesMostrar = new List<VistaEstadoEmocional>();
         var estadoEmocional = Enum.GetNames(typeof(EstadoEmocional)).ToList();
         for (int i = 0; i < estadoEmocional.Count; i++)
         {
@@ -125,22 +136,18 @@ public class EjerciciosFisicosController : Controller
         return Json(estadosEmocionalesMostrar);
     }
 
-public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, int lugarID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
-{
-    string resultado = "";
+    public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, int lugarID, int eventoDeportivoID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
+    {
+        string resultado = "";
 
-    if (!FechasValidas(inicio, fin))
-    {
-        resultado = "La fecha de fin debe ser posterior a la fecha de inicio.";
-    }
-    else
-    {
+
         if (ejercicioFisicoID == 0)
         {
             var ejercicioFisico = new EjercicioFisico
             {
                 TipoEjercicioID = tipoEjercicioID,
                 LugarID = lugarID,
+                EventoDeportivoID = eventoDeportivoID,
                 Inicio = inicio,
                 Fin = fin,
                 EstadoEmocionalInicio = estadoEmocionalInicio,
@@ -149,7 +156,7 @@ public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjerci
             };
             _context.Add(ejercicioFisico);
             _context.SaveChanges();
-            
+
             resultado = "Ejercicio físico guardado correctamente";
         }
         else
@@ -160,13 +167,14 @@ public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjerci
             {
                 ejercicioFisicoEditar.TipoEjercicioID = tipoEjercicioID;
                 ejercicioFisicoEditar.LugarID = lugarID;
+                ejercicioFisicoEditar.EventoDeportivoID = eventoDeportivoID;
                 ejercicioFisicoEditar.Inicio = inicio;
                 ejercicioFisicoEditar.Fin = fin;
                 ejercicioFisicoEditar.EstadoEmocionalInicio = estadoEmocionalInicio;
                 ejercicioFisicoEditar.EstadoEmocionalFin = estadoEmocionalFin;
                 ejercicioFisicoEditar.Observaciones = observaciones;
                 _context.SaveChanges();
-                
+
                 resultado = "Ejercicio físico actualizado correctamente";
             }
             else
@@ -174,17 +182,11 @@ public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjerci
                 resultado = "Ejercicio físico no encontrado";
             }
         }
+        // Devolver el resultado de la operación en formato JSON
+        return Json(resultado);
     }
-    
-    // Devolver el resultado de la operación en formato JSON
-    return Json(resultado);
-}
 
-    private bool FechasValidas(DateTime inicio, DateTime fin)
-    {
-        // Verificar que la fecha de fin sea posterior a la fecha de inicio
-        return inicio < fin;
-    }
+
 
 
     public JsonResult EliminarEjercicioFisico(int ejercicioFisicoID)

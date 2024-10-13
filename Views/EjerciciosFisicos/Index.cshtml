@@ -20,7 +20,7 @@
         <i class="fa-solid fa-plus iconosAddRefresh"></i> Agregar Registro
       </span>
     </button>
-    <button type="button" title="Click para Agregar un Ejercicio Físico" class="buttonRefresh"
+    <button type="button" class="buttonRefresh"
       onclick="ListadoEjerciciosFisicos()">
       <span class="button-content">
         <i class="fa-solid fa-arrows-rotate iconosAddRefresh"></i> Refrescar
@@ -53,11 +53,12 @@
       </button>
     </div>
   </div>
-  <table class="table tablaEjerciciosFisicos">
+  <table style="z-index: 50;" class="table table-primary table-striped">
     <thead class="headTabla">
       <tr>
         <th>EJERCICIO</th>
         <th>LUGAR</th>
+        <th>EVENTO</th>
         <th>INICIO</th>
         <th>FIN</th>
         <th>AL INICIAR:</th>
@@ -92,6 +93,10 @@
           <div class="dropdown">
             <label for="LugarID">SELECCIONE EL LUGAR:</label>
             @Html.DropDownList("LugarID", null, htmlAttributes: new { @class = "form-control" })
+          </div>
+          <div class="dropdown">
+            <label for="EventoDeportivoID">SELECCIONE EL EVENTO:</label>
+            @Html.DropDownList("EventoDeportivoID", null, htmlAttributes: new { @class = "form-control" })
           </div>
           <div class="form-group">
             <label for="inicio">INICIO:</label>

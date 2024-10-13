@@ -32,7 +32,7 @@ html{
   position: fixed;
   left: -350px;
   width: 350px;
-  height: 100vh;
+  height: 102vh;
   top: -3px;
   background-color: #042331;
   transition: all .5s ease;
@@ -55,8 +55,8 @@ html{
   display: block;
   height: 100%;
   width: 100%;
-  line-height: 65px;
-  font-size: 20px;
+  line-height: 50px;
+  font-size: 16px;
   color: white;
   padding-left: 25px;
   box-sizing: border-box;
@@ -80,10 +80,10 @@ html{
   background-color: #042331;
   display: block;
   width: 100%;
-  line-height: 65px;
-  font-size: 20px;
+  line-height: 50px;
+  font-size: 16px;
   color: white;
-  padding-right: 150px;
+  padding-right: 200px;
   box-sizing: border-box;
   border-top: 1px solid white;
   border-bottom: 1px solid black;
@@ -91,7 +91,7 @@ html{
 }
 
 .btnLogout:hover{
-  padding-left: 45px;
+  padding-right: 180px;
   background-color: #0c5a7e;
 }
 
@@ -149,36 +149,6 @@ html{
 
 
 
-
-
-.tablaTipoEjercicio{
-  color: white;
-  border-radius: 15px;
-  
-}
-
-.headTabla{
-  border: white;
-  background: rgb(0,226,121);
-  background: radial-gradient(circle, rgba(9, 87, 51, 0.658) 20%, rgba(0,0,0,.8) 91%);
-  color: white;
-  font-size: 18px;
-}
-
-
-.bodyTabla{
-  color: white;
-  background: rgb(0,226,121);
-  background: radial-gradient(circle, rgba(7, 124, 70, 0.658) 20%, rgba(0,0,0,.8) 91%);
-  font-weight: lighter;
-  font-size: 15px;
-}
-
-
-.tablaDescripcion{
-  vertical-align: middle;
-  font-weight: bolder;
-}
 
 .botonTabla{
   font-size: 16px;
