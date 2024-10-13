@@ -100,17 +100,17 @@ public class EjerciciosFisicosController : Controller
     }
 
 
-    public JsonResult EjerciciosFisicos(int? id)
+    public JsonResult EjerciciosFisicos(int? ejercicioFisicoID)
     {
         //DEFINIMOS UNA VARIABLE EN DONDE GUARDAMOS EL LISTADO COMPLETO DE TIPOS DE EJERCICIOS
         var ejerciciosFisicos = _context.EjerciciosFisicos.ToList();
 
         //LUEGO PREGUNTAMOS SI EL USUARIO INGRESO UN ID
         //QUIERE DECIR QUE QUIERE UN EJERCICIO EN PARTICULAR
-        if (id != null)
+        if (ejercicioFisicoID != null)
         {
             //FILTRAMOS EL LISTADO COMPLETO DE EJERCICIOS POR EL EJERCICIO QUE COINCIDA CON ESE ID
-            ejerciciosFisicos = ejerciciosFisicos.Where(e => e.EjercicioFisicoID == id).ToList();
+            ejerciciosFisicos = ejerciciosFisicos.Where(e => e.EjercicioFisicoID == ejercicioFisicoID).ToList();
         }
 
         return Json(ejerciciosFisicos);
