@@ -142,12 +142,13 @@ function FiltrarEjerciciosFisicos(){
 
 
 function ListadoEjerciciosFisicos(){
+    let personaID = document.getElementById("PersonaID").value;
     $.ajax({
         // la URL para la petición
         url: '../../EjerciciosFisicos/ListadoTipoEjerciciosFisicos',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
-        data: {  },
+        data: { personaID: personaID },
         // especifica si será una petición POST o GET
         type: 'POST',
         // el tipo de información que se espera de respuesta
@@ -209,6 +210,7 @@ function ListadoEjerciciosFisicos(){
 function GuardarEjerciciosFisicos(){
     // GUARDAMOS EN VARIABLES LOS VALORES INGRESADOS EN EL FORMULARIO
     let ejercicioFisicoID = document.getElementById("ejercicioFisicoID").value;
+    let personaID = document.getElementById("PersonaID").value;
     let tipoEjercicioID = document.getElementById("tipoEjercicioID").value;
     let lugarID = document.getElementById("LugarID").value;
     let eventoDeportivoID = document.getElementById("EventoDeportivoID").value;
@@ -224,6 +226,7 @@ function GuardarEjerciciosFisicos(){
         url: '../../EjerciciosFisicos/GuardarEjerciciosFisicos',
         data: { 
             ejercicioFisicoID: ejercicioFisicoID,
+            personaID: personaID,
             tipoEjercicioID: tipoEjercicioID,
             lugarID: lugarID,
             eventoDeportivoID: eventoDeportivoID,

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Proyecto1_2024.Models;
 using Proyecto1_2024.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Proyecto1_2024.Controllers;
 
@@ -18,28 +19,37 @@ public class LugaresController : Controller
     }
 
 
-    public IActionResult Index()
-    {
+    public IActionResult Index(int? PersonaID)
+    {   
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        PersonaID = _context.Personas.Where(t => t.CuentaID == userId).Select(t => t.PersonaID).SingleOrDefault();
+
+        ViewBag.PersonaID = PersonaID;
+
         return View();
     }
 
-    public JsonResult ListadoLugares(int? id)
+    public JsonResult ListadoLugares(int? lugarID, int? PersonaID)
     {
         //DEFINIMOS UNA VARIABLE EN DONDE GUARDAMOS EL LISTADO COMPLETO DE LUGARES
         var lugares = _context.Lugares.ToList();
 
         //LUEGO PREGUNTAMOS SI EL USUARIO INGRESO UN ID
         //QUIERE DECIR QUE QUIERE UN LUGAR EN PARTICULAR
-        if (id != null)
+        if (PersonaID != null)
         {
-            //FILTRAMOS EL LISTADO COMPLETO DE LUGARES POR EL LUGAR QUE COINCIDA CON ESE ID
-            lugares = lugares.Where(t => t.LugarID == id).ToList();
+            lugares = lugares.Where(t => t.PersonaID == PersonaID).ToList();
+        }
+        if (lugarID != null)
+        {
+            lugares = lugares.Where(t => t.LugarID == lugarID).ToList();
         }
 
         return Json(lugares);
     }
 
-    public JsonResult GuardarLugares(int lugarID, string nombre)
+    public JsonResult GuardarLugares(int lugarID, string nombre, int personaID)
     {
         string resultado = "";
         //1- VERIFICAMOS SI REALMENTE INGRESO ALGUN CARACTER Y LA VARIABLE NO SEA NULL
@@ -53,6 +63,7 @@ public class LugaresController : Controller
                 {
                     var lugar = new Lugar
                     {
+                        PersonaID = personaID,
                         Nombre = nombre
                     };
                     _context.Add(lugar);

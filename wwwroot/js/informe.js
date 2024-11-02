@@ -4,6 +4,7 @@ window.onload = ListadoInforme();
 function ListadoInforme() {
     let buscarInicioActividad = document.getElementById("BuscarInicioActividad").value;
     let buscarFinActividad = document.getElementById("BuscarFinActividad").value;
+    let personaID = document.getElementById("PersonaID").value;
     
     $.ajax({
         url: '../../Seguimiento/ListadoInforme',
@@ -11,6 +12,7 @@ function ListadoInforme() {
             id: null,  // Incluye el parámetro 'id' si es necesario
             BuscarInicioActividad: buscarInicioActividad,
             BuscarFinActividad: buscarFinActividad,
+            PersonaID: personaID
         },
         type: 'POST',
         dataType: 'json',

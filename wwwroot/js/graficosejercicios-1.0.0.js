@@ -18,8 +18,13 @@ let graficoTortaEjercicio;
 
 
 function GraficoTorta(){
+
   let mesBuscar = document.getElementById("MesEjercicioBuscar").value;
   let anioBuscar = document.getElementById("AnioEjercicioBuscar").value;
+  let personaID = document.getElementById("PersonaID").value;
+
+  
+
   $.ajax({
     // la URL para la petición
     url: '../../Seguimiento/GraficoTortaTipoEjerciciosPorMes',
@@ -27,7 +32,8 @@ function GraficoTorta(){
     // (también es posible utilizar una cadena de datos)
     data: { 
             Mes: mesBuscar,
-            Anio: anioBuscar 
+            Anio: anioBuscar,
+            PersonaID: personaID
           },
     // especifica si es una petición POST o GET
     type: 'POST',
@@ -73,10 +79,22 @@ function GraficoTorta(){
 
 
 
-$("#TipoEjercicioID").change(function () {
-  graficoEjercicio.destroy();
+$(document).ready(function () {
+  // Destruir el gráfico y volver a mostrarlo al cargar la página
+  if (graficoEjercicio) {
+      graficoEjercicio.destroy();
+  }
   MostrarGrafico();
+
+  // Destruir el gráfico y volver a mostrarlo cuando cambia el valor de #TipoEjercicioID
+  $("#TipoEjercicioID").change(function () {
+      if (graficoEjercicio) {
+          graficoEjercicio.destroy();
+      }
+      MostrarGrafico();
+  });
 });
+
 
 $("#MesEjercicioBuscar, #AnioEjercicioBuscar").change(function () {
   graficoEjercicio.destroy();
@@ -88,6 +106,7 @@ function MostrarGrafico(){
   let tipoEjercicioID = document.getElementById("TipoEjercicioID").value;
   let mesEjercicioBuscar = document.getElementById("MesEjercicioBuscar").value;
   let anioEjercicioBuscar = document.getElementById("AnioEjercicioBuscar").value;
+  let personaID = document.getElementById("PersonaID").value;
 
   $.ajax({
     // la URL para la petición
@@ -96,7 +115,8 @@ function MostrarGrafico(){
     // (también es posible utilizar una cadena de datos)
     data: { TipoEjercicioID: tipoEjercicioID, 
             Mes: mesEjercicioBuscar, 
-            Anio: anioEjercicioBuscar 
+            Anio: anioEjercicioBuscar,
+            PersonaID: personaID
           },
     // especifica si será una petición POST o GET
     type: 'POST',

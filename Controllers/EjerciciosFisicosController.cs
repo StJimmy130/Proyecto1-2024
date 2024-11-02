@@ -5,6 +5,7 @@ using Proyecto1_2024.Data;
 using Microsoft.AspNetCore.Authorization;
 using SQLitePCL;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace Proyecto1_2024.Controllers;
 
@@ -19,28 +20,39 @@ public class EjerciciosFisicosController : Controller
         _context = context;
     }
 
-    public IActionResult Index()
-    {
+    public IActionResult Index(int? PersonaID)
+    {   
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        PersonaID = _context.Personas.Where(t => t.CuentaID == userId).Select(t => t.PersonaID).SingleOrDefault();
+        ViewBag.PersonaID = PersonaID;
+        
 
         var tipoEjercicios = _context.TipoEjercicios.Where(te => !te.Eliminado).ToList();
         tipoEjercicios.Add(new TipoEjercicio { TipoEjercicioID = 0, Descripcion = "[SELECCIONE...]" });
         ViewBag.TipoEjercicioID = new SelectList(tipoEjercicios.OrderBy(c => c.Descripcion), "TipoEjercicioID", "Descripcion");
 
 
-        var lugares = _context.Lugares.ToList();
+        
+        var lugares = _context.Lugares.Where(l => l.PersonaID == PersonaID).ToList();
         lugares.Add(new Lugar { LugarID = 0, Nombre = "[SELECCIONE...]" });
-        ViewBag.lugarID = new SelectList(lugares.OrderBy(c => c.Nombre), "LugarID", "Nombre");
+        ViewBag.LugarID = new SelectList(lugares.OrderBy(c => c.Nombre), "LugarID", "Nombre");
 
-
+        
 
         var eventosDeportivos = _context.EventosDeportivos.Where(ed => !ed.Eliminado).ToList();
         eventosDeportivos.Add(new EventoDeportivo { EventoDeportivoID = 0, Descripcion = "[SELECCIONE...]" });
         ViewBag.EventoDeportivoID = new SelectList(eventosDeportivos.OrderBy(c => c.Descripcion), "EventoDeportivoID", "Descripcion");
 
+
+
+
         var tipoEjerciciosFiltrar = _context.TipoEjercicios.ToList();
         tipoEjerciciosFiltrar.Add(new TipoEjercicio { TipoEjercicioID = 0, Descripcion = "[TODOS]" });
         ViewBag.TipoEjercicioFiltrarID = new SelectList(tipoEjerciciosFiltrar.OrderBy(c => c.Descripcion), "TipoEjercicioID", "Descripcion");
 
+
+        
 
 
         return View();
@@ -48,7 +60,7 @@ public class EjerciciosFisicosController : Controller
 
 
 
-    public JsonResult ListadoTipoEjerciciosFisicos(int? id, int tipoEjercicioFiltrarID, DateTime? fechaDesde, DateTime? fechaHasta)
+    public JsonResult ListadoTipoEjerciciosFisicos(int? id, int? PersonaID, int tipoEjercicioFiltrarID, DateTime? fechaDesde, DateTime? fechaHasta)
     {
         List<VistaEjercicioFisico> ejerciciosFisicosMostrar = new List<VistaEjercicioFisico>();
 
@@ -57,6 +69,11 @@ public class EjerciciosFisicosController : Controller
         if (id != null)
         {
             ejerciciosFisicos = ejerciciosFisicos.Where(t => t.EjercicioFisicoID == id).ToList();
+        }
+        
+        if (PersonaID != null)
+        {
+            ejerciciosFisicos = ejerciciosFisicos.Where(t => t.PersonaID == PersonaID).ToList();
         }
 
         if (fechaDesde != null && fechaHasta != null)
@@ -136,7 +153,7 @@ public class EjerciciosFisicosController : Controller
         return Json(estadosEmocionalesMostrar);
     }
 
-    public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int tipoEjercicioID, int lugarID, int eventoDeportivoID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
+    public JsonResult GuardarEjerciciosFisicos(int ejercicioFisicoID, int PersonaID, int tipoEjercicioID, int lugarID, int eventoDeportivoID, DateTime inicio, DateTime fin, EstadoEmocional estadoEmocionalInicio, EstadoEmocional estadoEmocionalFin, string? observaciones)
     {
         string resultado = "";
 
@@ -144,7 +161,8 @@ public class EjerciciosFisicosController : Controller
         if (ejercicioFisicoID == 0)
         {
             var ejercicioFisico = new EjercicioFisico
-            {
+            {   
+                PersonaID = PersonaID,
                 TipoEjercicioID = tipoEjercicioID,
                 LugarID = lugarID,
                 EventoDeportivoID = eventoDeportivoID,

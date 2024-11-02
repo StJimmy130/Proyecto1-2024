@@ -2,12 +2,15 @@ window.onload = ListadoLugares();
 
 
 function ListadoLugares(){
+    let personaID = document.getElementById("PersonaID").value;
     $.ajax({
         // la URL para la petición
         url: '../../Lugares/ListadoLugares',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
-        data: {  },
+        data: {  
+            personaID: personaID
+        },
         // especifica si será una petición POST o GET
         type: 'POST',
         // el tipo de información que se espera de respuesta
@@ -153,6 +156,7 @@ function AbrirModalEditar(lugarID){
 
 function GuardarRegistro(){
     //GUARDAMOS EN UNA VARIABLE LO ESCRITO EN EL INPUT DESCRIPCION
+    let personaID = document.getElementById("PersonaID").value;
     let lugarID = document.getElementById("LugarID").value;
     let nombre = document.getElementById("Nombre").value;
     //POR UN LADO PROGRAMAR VERIFICACIONES DE DATOS EN EL FRONT CUANDO 
@@ -165,6 +169,7 @@ function GuardarRegistro(){
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
         data: { 
+            personaID: personaID,
             lugarID: lugarID, 
             nombre: nombre
         },

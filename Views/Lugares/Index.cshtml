@@ -7,8 +7,15 @@
 <link rel="stylesheet" href="~/css/tipoEjercicios.css">
 
 
+<input type="hidden" id="PersonaID" value="@ViewBag.PersonaID">
 
-<h1 class="t-stroke2 t-shadow2">LUGARES!</h1>
+
+<div class="row">
+  <div class="col-12">
+    <h1 class="t-stroke2 t-shadow2">LUGARES!</h1>
+  </div>
+</div>
+
 
 
 <!-- Button Modal -->
@@ -49,11 +56,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        
         <form>
           <div class="mb-3">
             <input type="hidden" id="LugarID" value="0" />
             <label for="Nombre" class="form-label">Nombre del lugar</label>
-            <input type="text" class="form-control" id="Nombre" placeholder="Nombre del lugar">
+            <input type="text" class="form-control text-white" id="Nombre" placeholder="Nombre del lugar">
           </div>
         </form>
       </div>

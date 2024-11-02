@@ -1,29 +1,37 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@inject Proyecto1_2024.Data.ApplicationDbContext _context
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@using Proyecto1_2024.Models
+
+@{
+    var userId = UserManager.GetUserId(User); // Obtener el ID del usuario actual
+    var usuario = _context.Personas.FirstOrDefault(u => u.CuentaID == userId);
+    var userName = usuario?.NombreCompleto ?? "Administrador"; // Obtener el nombre o usar un valor por defecto
+    var isSignedIn = SignInManager.IsSignedIn(User);
+}
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="login-register" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline login-register" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button type="submit" class="btnLogout">
-                <i class="fa-solid fa-right-to-bracket"></i>Cerrar sesión  
-            </button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="login-register" asp-area="Identity" asp-page="/Account/Register"><i class="fa-regular fa-id-card"></i>Registrarse</a>
-    </li>
-    <li class="nav-item">
-        
-        <a class="login-register" asp-area="Identity" asp-page="/Account/Login"><i class="fa-solid fa-right-to-bracket"></i>Ingresar</a>
-    </li>
-}
+    @if (isSignedIn)
+    {
+        <li class="nav-item">
+            <a class="login-register" asp-area="" asp-controller="Personas" asp-action="Index">@userName!</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline login-register" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="btnLogout">
+                    <i class="fa-solid fa-right-to-bracket"></i> Cerrar sesión  
+                </button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="login-register" asp-area="Identity" asp-page="/Account/Register"><i class="fa-regular fa-id-card"></i> Registrarse</a>
+        </li>
+        <li class="nav-item">
+            <a class="login-register" asp-area="Identity" asp-page="/Account/Login"><i class="fa-solid fa-right-to-bracket"></i> Ingresar</a>
+        </li>
+    }
 </ul>

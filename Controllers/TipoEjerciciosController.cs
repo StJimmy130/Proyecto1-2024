@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Proyecto1_2024.Controllers;
 
-[Authorize]
+[Authorize(Roles = "ADMINISTRADOR")]
 public class TipoEjerciciosController : Controller
 {
     private ApplicationDbContext _context;

@@ -18,6 +18,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Proyecto1_2024.Data;
+using Proyecto1_2024.Models;
+using Proyecto1_2024.Migrations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Proyecto1.Areas.Identity.Pages.Account
 {
@@ -29,13 +33,16 @@ namespace Proyecto1.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext _contexto
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +50,7 @@ namespace Proyecto1.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = _contexto;
         }
 
         /// <summary>
@@ -74,6 +82,46 @@ namespace Proyecto1.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// 
+            /// <summary>
+            ///     Nombre completo del usuario.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} y un máximo de {1} caracteres.", MinimumLength = 2)]
+            [Display(Name = "Nombre Completo")]
+            public string NombreCompleto { get; set; }
+
+            /// <summary>
+            ///     Fecha de nacimiento del usuario.
+            /// </summary>
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Fecha de Nacimiento")]
+            public DateOnly FechaNacimiento { get; set; }
+
+            /// <summary>
+            ///     Género del usuario.
+            /// </summary>
+            [Required]
+            [Display(Name = "Género")]
+            public Genero Genero { get; set; }
+
+            /// <summary>
+            ///     Peso del usuario en kilogramos.
+            /// </summary>
+            [Required]
+            [Display(Name = "Peso (kg)")]
+            public decimal Peso { get; set; }
+
+            /// <summary>
+            ///     Altura del usuario en metros.
+            /// </summary>
+            [Required]
+            [Display(Name = "Altura (m)")]
+            public decimal Altura { get; set; }
+
+
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -104,7 +152,23 @@ namespace Proyecto1.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var selectListItems = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0", Text = "Seleccione" }
+            };
+
+            var generos = Enum.GetValues(typeof(Genero)).Cast<Genero>();
+
+            selectListItems.AddRange(generos.Select(e => new SelectListItem
+            {
+                Value = ((int)e).ToString(), 
+                Text = e.ToString()
+            }));
+
+            ViewData["Generos"] = selectListItems; 
         }
+
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -123,16 +187,19 @@ namespace Proyecto1.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    var Persona = new Persona
+                    {
+                        CuentaID = userId,
+                        NombreCompleto = Input.NombreCompleto,
+                        FechaNacimiento = Input.FechaNacimiento,
+                        Genero = Input.Genero,
+                        Peso = Input.Peso,
+                        Altura = Input.Altura
+                    };
+                    _context.Personas.Add(Persona);
+                    await _context.SaveChangesAsync();
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -150,7 +217,6 @@ namespace Proyecto1.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
 

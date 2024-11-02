@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="~/css/ejerciciosFisicos.css">
 
 
+<input type="hidden" id="PersonaID" value="@ViewBag.PersonaID">
+
 <div class="row">
   <div class="col-12">
     <h1 class="t-stroke t-shadow">EJERCICIOS!</h1>
@@ -85,6 +87,7 @@
       </div>
       <div class="modal-body">
         <form id="FormEjercicioFisico">
+          
           <input type="hidden" id="ejercicioFisicoID" value="0">
           <div class="dropdown">
             <label for="TipoEjercicioID">SELECCIONE EL TIPO DE EJERCICIO:</label>

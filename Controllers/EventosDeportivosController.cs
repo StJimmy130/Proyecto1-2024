@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Proyecto1_2024.Controllers;
 
-
+[Authorize(Roles = "ADMINISTRADOR")]
 public class EventosDeportivosController : Controller
 {
     private ApplicationDbContext _context;
@@ -94,27 +94,27 @@ public class EventosDeportivosController : Controller
     }
 
     public JsonResult EliminarEventoDeportivo(int eventoDeportivoID)
-{
-    var eventoDeportivo = _context.EventosDeportivos
-                                  .Include(e => e.EjerciciosFisicos)
-                                  .FirstOrDefault(e => e.EventoDeportivoID == eventoDeportivoID);
-
-    if (eventoDeportivo == null)
-        return Json(new { eliminado = false, mensaje = "El evento deportivo no fue encontrado." });
-
-    if (eventoDeportivo.EjerciciosFisicos.Count != 0)
     {
-        return Json(new { eliminado = false, mensaje = "El evento deportivo está relacionado con un ejercicio físico y no puede desactivarse." });
+        var eventoDeportivo = _context.EventosDeportivos
+                                      .Include(e => e.EjerciciosFisicos)
+                                      .FirstOrDefault(e => e.EventoDeportivoID == eventoDeportivoID);
+
+        if (eventoDeportivo == null)
+            return Json(new { eliminado = false, mensaje = "El evento deportivo no fue encontrado." });
+
+        if (eventoDeportivo.EjerciciosFisicos.Count != 0)
+        {
+            return Json(new { eliminado = false, mensaje = "El evento deportivo está relacionado con un ejercicio físico y no puede desactivarse." });
+        }
+
+        // Cambiar el estado de 'Eliminado' al contrario de su estado actual
+        eventoDeportivo.Eliminado = !eventoDeportivo.Eliminado;
+        _context.SaveChanges();
+
+        // Devolver un mensaje basado en el nuevo estado de 'Eliminado'
+        var mensaje = eventoDeportivo.Eliminado ? "El evento deportivo ha sido desactivado." : "El evento deportivo ha sido activado.";
+        return Json(new { eliminado = eventoDeportivo.Eliminado, mensaje });
     }
-
-    // Cambiar el estado de 'Eliminado' al contrario de su estado actual
-    eventoDeportivo.Eliminado = !eventoDeportivo.Eliminado;
-    _context.SaveChanges();
-
-    // Devolver un mensaje basado en el nuevo estado de 'Eliminado'
-    var mensaje = eventoDeportivo.Eliminado ? "El evento deportivo ha sido desactivado." : "El evento deportivo ha sido activado.";
-    return Json(new { eliminado = eventoDeportivo.Eliminado, mensaje });
-}
 
 
 }
