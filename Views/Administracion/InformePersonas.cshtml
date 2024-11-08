@@ -1,0 +1,46 @@
+@{
+  ViewData["Title"] = "Administración";
+}
+
+
+<link rel="stylesheet" href="~/css/tipoEjercicios.css">
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <h1 class="t-stroke t-shadow">DEPORTISTAS!</h1>
+  </div>
+</div>
+
+
+<h5 for="Generos" class="text-white text-center">Filtrar por géneros</h5>
+<div class="mb-3 col-12 d-flex justify-content-center">
+  @Html.DropDownList("Generos", null, htmlAttributes: new { @class = "form-control text-dark bg-light", @style = "width: 300px;", @id = "Genero" })
+  <button class="btn btn-primary ms-2" onclick="ListadoDeportistas()">Filtrar</button>
+  <button onclick="LimpiarFiltro()" class="btn btn-secondary ms-2">Limpiar </button>
+</div>
+
+
+
+<button id="btnImprimir" class="m-3 btn btn-info" onclick="ImprimirInforme()">
+  <i class="fa-solid fa-download"></i> Imprimir
+</button>
+
+<table id="tabla-deportistas" class="table table-primary table-striped">
+  <thead class="headTabla">
+    <tr>
+      <th>Nombre completo</th>
+      <th>Email</th>
+      <th>Fecha Nacimiento</th>
+      <th>Género</th>
+      <th>Peso</th>
+      <th>Altura</th>
+      <th>Rol</th>
+    </tr>
+  </thead>
+  <tbody class="bodyTabla" id="tbody-informeDeportistas"></tbody>
+</table>
+
+
+@section Scripts {
+  <script src="~/js/administracion.js"></script>
+}

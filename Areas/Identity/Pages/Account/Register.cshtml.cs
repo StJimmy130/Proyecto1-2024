@@ -162,11 +162,11 @@ namespace Proyecto1.Areas.Identity.Pages.Account
 
             selectListItems.AddRange(generos.Select(e => new SelectListItem
             {
-                Value = ((int)e).ToString(), 
+                Value = ((int)e).ToString(),
                 Text = e.ToString()
             }));
 
-            ViewData["Generos"] = selectListItems; 
+            ViewData["Generos"] = selectListItems;
         }
 
 
@@ -174,6 +174,7 @@ namespace Proyecto1.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -185,6 +186,9 @@ namespace Proyecto1.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Asignar el rol "DEPORTISTA" al nuevo usuario creado.
+                    await _userManager.AddToRoleAsync(user, "DEPORTISTA");
 
                     var userId = await _userManager.GetUserIdAsync(user);
 
@@ -199,7 +203,6 @@ namespace Proyecto1.Areas.Identity.Pages.Account
                     };
                     _context.Personas.Add(Persona);
                     await _context.SaveChangesAsync();
-
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

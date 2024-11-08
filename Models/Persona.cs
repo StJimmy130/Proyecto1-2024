@@ -17,6 +17,7 @@ public class Persona
     
     public virtual ICollection<EjercicioFisico> EjerciciosFisicos { get; set; }
     public virtual ICollection<Lugar> Lugares { get; set; }
+
 }
 
 public enum Genero
@@ -24,4 +25,17 @@ public enum Genero
     Hombre = 1,
     Mujer,
     Otro
+}
+
+public class PersonaConRolViewModel
+{
+    public int PersonaID { get; set; }
+    public string? NombreCompleto { get; set; }
+    public DateOnly FechaNacimiento { get; set; }
+    public string? Genero { get; set; }
+    public decimal Peso { get; set; }
+    public decimal Altura { get; set; }
+    public string? CuentaID { get; set; }
+    public string? Rol { get; set; } // Para almacenar el rol del usuario
+    public string? Email { get; set; }
 }

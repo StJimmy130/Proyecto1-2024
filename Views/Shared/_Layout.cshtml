@@ -42,6 +42,10 @@
                     <a asp-controller="EventosDeportivos" asp-action="Index"><i
                             class="fa-regular fa-calendar-minus"></i>Eventos deportivos</a>
                 </li>
+                <li>
+                    <a asp-controller="Administracion" asp-action="InformePersonas"><i
+                            class="fa-regular fa-calendar-minus"></i>Informe deportistas</a>
+                </li>
                 <footer class="footerSidebar">
                     <partial class="footerSidebar" name="_LoginPartial" />
                 </footer>
@@ -98,6 +102,10 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/js/jspdf/jspdf.min.js"></script>
+    <script src="~/js/jspdf/jspdf.debug.js"></script>
+    <script src="~/js/jspdf/jspdf.plugin.autotable.js"></script>
 </body>
 
 </html>

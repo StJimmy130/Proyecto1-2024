@@ -31,7 +31,13 @@ public class HomeController : Controller
         PersonaID = _context.Personas.Where(t => t.CuentaID == userId).Select(t => t.PersonaID).SingleOrDefault();
         ViewBag.PersonaID = PersonaID;
 
-        await InicializarPermisosUsuario();
+        // Llamar a InicializarPermisosUsuario
+        var permisosInicializados = await InicializarPermisosUsuario();
+        if (permisosInicializados == null)
+        {
+            // Log para saber si ocurrió un error
+            Console.WriteLine("Error al inicializar permisos de usuario.");
+        }
 
         return View();
     }
@@ -50,50 +56,44 @@ public class HomeController : Controller
 
 
 
-
-    public async Task<JsonResult> InicializarPermisosUsuario()
+    public async Task<bool> InicializarPermisosUsuario()
+{
+    try
     {
         // CREAR ROLES SI NO EXISTEN
-        // Verifica si el rol "ADMINISTRADOR" ya existe en la base de datos.
-        var nombreRolAdminExiste = _context.Roles.Where(r => r.Name == "ADMINISTRADOR").SingleOrDefault();
-
-        // Si el rol "ADMINISTRADOR" no existe, se crea un nuevo rol con ese nombre.
-        if (nombreRolAdminExiste == null)
+        if (!await _rolManager.RoleExistsAsync("ADMINISTRADOR"))
         {
-            var roleAdminResult = await _rolManager.CreateAsync(new IdentityRole("ADMINISTRADOR"));
+            await _rolManager.CreateAsync(new IdentityRole("ADMINISTRADOR"));
+        }
+
+        if (!await _rolManager.RoleExistsAsync("DEPORTISTA"))
+        {
+            await _rolManager.CreateAsync(new IdentityRole("DEPORTISTA"));
         }
 
         // CREAR USUARIO PRINCIPAL
         bool creado = false;
-
-        // Busca si ya existe un usuario con el correo "admin@workout.com".
-        var usuario = _context.Users.Where(u => u.Email == "admin@workout.com").SingleOrDefault();
-
-        // Si no existe un usuario con ese correo, se procede a crearlo.
+        var usuario = _context.Users.SingleOrDefault(u => u.Email == "admin@workout.com");
         if (usuario == null)
         {
             var user = new IdentityUser { UserName = "admin@workout.com", Email = "admin@workout.com" };
-
-            // Crea el usuario con la contraseña predeterminada "Proyecto2024".
             var result = await _userManager.CreateAsync(user, "Proyecto2024");
 
-            // Asigna el rol "ADMINISTRADOR" al nuevo usuario creado.
-            await _userManager.AddToRoleAsync(user, "ADMINISTRADOR");
-
-            // Actualiza la variable "creado" para indicar si la creación fue exitosa.
-            creado = result.Succeeded;
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "ADMINISTRADOR");
+                creado = true;
+            }
         }
 
-        // BUSCAR EL USUARIO SI SE NECESITA
-        var superusuario = _context.Users.Where(r => r.Email == "admin@workout.com").SingleOrDefault();
-        if (superusuario != null)
-        {
-            var usuarioID = superusuario.Id;
-        }
-
-        // Devuelve un objeto JSON que indica si el usuario fue creado.
-        return Json(creado);
+        return creado;
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error al inicializar permisos: " + ex.Message);
+        return false;
+    }
+}
 
 
 
