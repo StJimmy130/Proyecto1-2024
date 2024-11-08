@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Proyecto1_2024.Controllers;
 
-[Authorize]
+[Authorize (Roles = "DEPORTISTA")]
 public class SeguimientoController : Controller
 {
     private ApplicationDbContext _context;

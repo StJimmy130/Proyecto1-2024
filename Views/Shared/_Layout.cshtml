@@ -50,7 +50,7 @@
                     <partial class="footerSidebar" name="_LoginPartial" />
                 </footer>
             }
-            else
+            else if(user != null && await UserManager.IsInRoleAsync(user, "DEPORTISTA"))
             {
                 <li>
                     <a asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i>Home</a>
@@ -76,7 +76,16 @@
                     <a asp-controller="Seguimiento" asp-action="Informe4Niveles"><i class="fa-solid fa-database"></i>Informe
                         4 niveles</a>
                 </li>
-
+                
+                <footer class="footerSidebar">
+                    <partial class="footerSidebar" name="_LoginPartial" />
+                </footer>
+            }
+            else
+            {
+                <li>
+                    <a asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house"></i>Home</a>
+                </li>
                 <footer class="footerSidebar">
                     <partial class="footerSidebar" name="_LoginPartial" />
                 </footer>

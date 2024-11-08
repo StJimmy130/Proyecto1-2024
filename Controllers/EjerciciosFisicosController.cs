@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace Proyecto1_2024.Controllers;
 
-[Authorize]
+[Authorize (Roles = "DEPORTISTA")]
 public class EjerciciosFisicosController : Controller
 {
     private ApplicationDbContext _context;
