@@ -4,6 +4,7 @@ using Proyecto1_2024.Models;
 using Proyecto1_2024.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Proyecto1_2024.Controllers;
 
@@ -39,8 +40,17 @@ public class TipoEjerciciosController : Controller
         return Json(tipoDeEjercicios);
     }
 
-    public JsonResult GuardarTipoEjercicio(int tipoEjercicioID, string descripcion)
+    public JsonResult GuardarTipoEjercicio(int tipoEjercicioID, string descripcion, string Met)
     {
+        //FIJAR INFORMACION DE CULTURA PARA FECHA Y DECIMALES
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("es-AR");
+        string metString = Met;
+        if(!string.IsNullOrEmpty(metString)){
+            metString = metString.Replace(".", ",");
+        }
+        Decimal metDecimal = new();
+        var validaMet = Decimal.TryParse(metString, out metDecimal);
+        
         string resultado = "";
         //1- VERIFICAMOS SI REALMENTE INGRESO ALGUN CARACTER Y LA VARIABLE NO SEA NULL
         if (!String.IsNullOrEmpty(descripcion))
@@ -53,7 +63,8 @@ public class TipoEjerciciosController : Controller
                 {
                     var tipoEjercicio = new TipoEjercicio
                     {
-                        Descripcion = descripcion
+                        Descripcion = descripcion,
+                        MET = metDecimal
                     };
                     _context.Add(tipoEjercicio);
                     _context.SaveChanges();
@@ -77,6 +88,7 @@ public class TipoEjerciciosController : Controller
                     {
                         //QUIERE DECIR QUE EL ELEMENTO Y ES CORRECTO, ENTONCES CONTINUAMOS CON EL EDITAR
                         tipoEjercicioEditar.Descripcion = descripcion;
+                        tipoEjercicioEditar.MET = metDecimal;
                         _context.SaveChanges();
                     }
                     else

@@ -9,14 +9,13 @@ function getInfo() {
     type: "POST",
     dataType: "json",
     success: function (data) {
-
-      $("#NombreCompleto").val(data.nombreCompleto);
-      $("#Genero").val(data.genero);
-      $("#FechaNacimiento").val(data.fechaNacimiento);
-      $("#Peso").val(data.peso);
-      $("#Altura").val(data.altura);
-
-
+      document.getElementById("NombreCompleto").value = data.nombreCompleto;
+      document.getElementById("Genero").value = data.genero;
+      document.getElementById("FechaNacimiento").value = data.fechaNacimiento.split('T')[0];
+      document.getElementById("Peso").value = data.peso;
+      document.getElementById("Altura").value = data.altura;
+    
+      calcularIMC_TMB();
     },
     error: function (xhr, status) {
       console.log("Disculpe, existió un problema al cargar el listado");
@@ -26,11 +25,11 @@ function getInfo() {
 
 function ActualizarInformacion() {
   let personaID = document.getElementById("PersonaID").value;
-  let nombreCompleto = $("#NombreCompleto").val();
-  let genero = $("#Genero").val();
-  let fechaNacimiento = $("#FechaNacimiento").val();
-  let peso = $("#Peso").val();
-  let altura = $("#Altura").val();
+  let nombreCompleto = document.getElementById("NombreCompleto").value;
+  let genero = document.getElementById("Genero").value;
+  let fechaNacimiento = document.getElementById("FechaNacimiento").value.split('T')[0];
+  let peso = document.getElementById("Peso").value;
+  let altura = document.getElementById("Altura").value;
   $.ajax({
     url: "../../Personas/GuardarDatosUsuario",
     data: {
@@ -51,3 +50,6 @@ function ActualizarInformacion() {
     },
   });
 }
+
+
+

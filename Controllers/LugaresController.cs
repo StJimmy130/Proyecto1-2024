@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace Proyecto1_2024.Controllers;
 
-[Authorize (Roles = "DEPORTISTA")]
+[Authorize (Roles = "Deportista")]
 public class LugaresController : Controller
 {
     private ApplicationDbContext _context;
@@ -58,7 +58,7 @@ public class LugaresController : Controller
             nombre = nombre.ToUpper();
             if (lugarID == 0)
             {
-                var existeLugar = _context.Lugares.Where(t => t.Nombre == nombre).Count();
+                var existeLugar = _context.Lugares.Where(t => t.Nombre == nombre && t.PersonaID == personaID).Count();
                 if (existeLugar == 0)
                 {
                     var lugar = new Lugar

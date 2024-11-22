@@ -26,7 +26,7 @@ public class AdministracionController : Controller
     {
         var selectListItems = new List<SelectListItem>
         {
-            new SelectListItem { Value = "0", Text = "[SELECCIONE...]" }
+            new SelectListItem { Value = "0", Text = "[TODOS]" }
         };
 
         var enumValues = Enum.GetValues(typeof(Genero)).Cast<Genero>();
@@ -49,6 +49,7 @@ public class AdministracionController : Controller
                                 join userRole in _context.UserRoles on user.Id equals userRole.UserId
                                 join role in _context.Roles on userRole.RoleId equals role.Id
                                 where genero == 0 || persona.Genero == (Genero)genero
+                                orderby persona.FechaNacimiento
                                 select new
                                 {
                                     persona.PersonaID,
@@ -67,7 +68,7 @@ public class AdministracionController : Controller
             PersonaID = p.PersonaID,
             Email = p.Email,
             NombreCompleto = p.NombreCompleto,
-            FechaNacimiento = p.FechaNacimiento,
+            FechaNacimiento = p.FechaNacimiento.ToString("dd/MM/yyyy"),
             Genero = Enum.GetName(typeof(Genero), p.Genero),
             Peso = p.Peso,
             Altura = p.Altura,

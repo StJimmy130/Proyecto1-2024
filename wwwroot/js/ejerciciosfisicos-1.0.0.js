@@ -173,6 +173,8 @@ function ListadoEjerciciosFisicos(){
                     <td class="tablaDescripcion">${ejercicioFisico.fechaFinString}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalInicio}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.estadoEmocionalFin}</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.intervaloEjercicio} - min</td>
+                    <td class="tablaDescripcion">${ejercicioFisico.caloriasQuemadas.toFixed(2)}</td>
                     <td class="tablaDescripcion">${ejercicioFisico.observaciones}</td>
                     <td class="text-center">
                         <button type="button" class="btn btn-secondary botonTabla" title="Editar Registro" onclick="AbrirModalEditar(${ejercicioFisico.ejercicioFisicoID})">

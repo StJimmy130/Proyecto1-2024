@@ -27,6 +27,8 @@ public class EjercicioFisico
     public virtual Lugar Lugares { get; set; }
     public virtual EventoDeportivo EventosDeportivos { get; set; }
     public virtual Persona Personas { get; set; }
+
+
 }
 
 public class VistaEjercicioFisico
@@ -35,7 +37,11 @@ public class VistaEjercicioFisico
     public int TipoEjercicioID { get; set; }
     public int EventoDeportivoID { get; set; }
     public int LugarID { get; set; }
+    public int PersonaID { get; set; }
+    public Genero Genero { get; set; }
+    public decimal Peso { get; set; }
     public string? TipoEjercicioDescripcion { get; set; }
+    public decimal Met { get; set; }
     public string? LugarString { get; set; }
     public string? EventoDeportivoString { get; set; }
     public string? FechaInicioString { get; set; }
@@ -44,6 +50,7 @@ public class VistaEjercicioFisico
     public string? EstadoEmocionalInicio { get; set; }
     public string? EstadoEmocionalFin { get; set; }
     public string? Observaciones { get; set; }
+    public decimal CaloriasQuemadas { get; set; }
 }
 
 

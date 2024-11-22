@@ -31,7 +31,7 @@ function ListadoInforme() {
             for (let tipoEjercicio in agrupadoPorTipo) {
                 contenidoTabla += `
                 <tr>
-                    <td class="text-start" colspan="7">${tipoEjercicio}</td>
+                    <td class="text-start" colspan="8">${tipoEjercicio}</td>
                 </tr>
                 `;
                 
@@ -42,6 +42,7 @@ function ListadoInforme() {
                         <td>${ejercicio.fechaInicioString}</td>
                         <td>${ejercicio.fechaFinString}</td>
                         <td>${ejercicio.intervaloEjercicio} - min</td>
+                        <td>${ejercicio.caloriasQuemadas}</td>
                         <td>${ejercicio.estadoEmocionalInicio}</td>
                         <td>${ejercicio.estadoEmocionalFin}</td>
                         <td>${ejercicio.observaciones}</td>

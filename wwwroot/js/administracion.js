@@ -1,54 +1,75 @@
 window.onload = ListadoDeportistas();
 
 function ListadoDeportistas() {
-    let genero = document.getElementById("Genero").value;
-    $.ajax({
-        // La URL para la petición
-        url: '../../Administracion/ObtenerPersonasConRoles',  // Cambia la URL según sea necesario
-        // Los datos a enviar
-        data: { genero: genero },
-        // Especifica si será una petición POST o GET
-        type: 'POST',
-        // El tipo de información que se espera de respuesta
-        dataType: 'json',
-        // Código a ejecutar si la petición es satisfactoria;
-        // La respuesta es pasada como argumento a la función
-        success: function (deportistas) {
+  let genero = document.getElementById("Genero").value;
+  $.ajax({
+      url: '../../Administracion/ObtenerPersonasConRoles',
+      data: { genero: genero },
+      type: 'POST',
+      dataType: 'json',
+      success: function (deportistas) {
+          let contenidoTabla = ``;
 
-            let contenidoTabla = ``;
+          $.each(deportistas, function (index, deportista) {
+              
 
-            $.each(deportistas, function (index, deportista) {
-                contenidoTabla += `
-                <tr>
-                    <td>${deportista.nombreCompleto}</td>
-                    <td>${deportista.email}</td>
-                    <td>${deportista.fechaNacimiento}</td>
-                    <td>${deportista.genero}</td>
-                    <td>${deportista.peso}</td>
-                    <td>${deportista.altura}</td>
-                    <td>${deportista.rol}</td>
-                </tr>
-                `;
-            });
+              contenidoTabla += `
+              <tr>
+                  <td>${deportista.nombreCompleto}</td>
+                  <td>${deportista.email}</td>
+                  <td>${deportista.fechaNacimiento}</td>
+                  <td>${deportista.genero}</td>
+                  <td>${deportista.peso}</td>
+                  <td>${deportista.altura}</td>
+                  <td>${deportista.rol}</td>
+              </tr>
+              `;
+          });
 
-            // Asignar el contenido de la tabla
-            document.getElementById("tbody-informeDeportistas").innerHTML = contenidoTabla;
-        },
-        // Código a ejecutar si la petición falla
-        error: function (xhr, status) {
-            Swal.fire({
-                title: "Disculpe",
-                text: "Existió un problema al cargar la lista de deportistas.",
-                icon: "warning",
-            });
-        }
-    });
+          // Asignar el contenido de la tabla
+          document.getElementById("tbody-informeDeportistas").innerHTML = contenidoTabla;
+      },
+      error: function (xhr, status) {
+          Swal.fire({
+              title: "Disculpe",
+              text: "Existió un problema al cargar la lista de deportistas.",
+              icon: "warning",
+          });
+      }
+  });
 }
 
 
-function LimpiarFiltro() {
-    document.getElementById("Genero").value = "0";
-    ListadoDeportistas(0);  
+function calcularIMC_TMB() {
+  // Obtén los valores de peso, altura, género y edad
+  let peso = parseFloat(document.getElementById("Peso").value);
+  let altura = parseFloat(document.getElementById("Altura").value) / 100; // Convertir a metros
+  let genero = document.getElementById("Genero").value; // Género seleccionado
+  let edad = parseInt(document.getElementById("Edad").value); // Edad enviada desde el backend
+
+  if (peso && altura && edad) {
+    // Calcular IMC
+    let imc = (peso / (altura * altura)).toFixed(2);
+    document.getElementById("IMC").value = imc + " (" + obtenerCategoriaIMC(imc) + ")";
+
+    // Calcular TMB (según Harris-Benedict)
+    let tmb;
+    if (genero === "1") {
+      // Hombre
+      tmb = (88.36 + (13.4 * peso) + (4.8 * (altura * 100)) - (5.7 * edad)).toFixed(2);
+    } else if (genero === "2") {
+      // Mujer
+      tmb = (447.6 + (9.2 * peso) + (3.1 * (altura * 100)) - (4.3 * edad)).toFixed(2);
+    }
+    document.getElementById("TMB").value = tmb + " kcal";
+  }
+}
+
+function obtenerCategoriaIMC(imc) {
+  if (imc < 18.5) return "Bajo peso";
+  else if (imc < 24.9) return "Normal";
+  else if (imc < 29.9) return "Sobrepeso";
+  else return "Obesidad";
 }
 
 

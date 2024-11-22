@@ -30,7 +30,7 @@ function ListadoInformePorLugar() {
             for (let lugarString in agrupadoPorLugar) {
                 contenidoTabla += `
                 <tr>
-                    <td class="text-start" colspan="6">${lugarString}</td>
+                    <td class="text-start" colspan="7">${lugarString}</td>
                 </tr>
                 `;
                 
@@ -41,6 +41,7 @@ function ListadoInformePorLugar() {
                         <td>${ejercicio.fechaInicioString}</td>
                         <td>${ejercicio.fechaFinString}</td>
                         <td>${ejercicio.intervaloEjercicio} - min</td>
+                        <td>${ejercicio.caloriasQuemadas}</td>
                         <td>${ejercicio.tipoEjercicioDescripcion}</td>
                         <td>${ejercicio.observaciones}</td>
                     </tr>

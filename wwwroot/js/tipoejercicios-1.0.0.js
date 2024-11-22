@@ -32,6 +32,7 @@ function ListadoTipoEjercicios() {
                 contenidoTabla += `
                 <tr class="${filaClase}">
                     <td class="tablaDescripcion">${tipoDeEjercicio.descripcion}</td>
+                    <td class="tablaDescripcion">${tipoDeEjercicio.met}</td>
                     <td class="text-center">
                         ${editarBoton}
                     </td>
@@ -58,6 +59,7 @@ function ListadoTipoEjercicios() {
 function LimpiarModal(){
     document.getElementById("TipoEjercicioID").value = 0;
     document.getElementById("descripcion").value = "";
+    document.getElementById("MET").value = 0;
 }
 
 function NuevoRegistro(){
@@ -85,6 +87,7 @@ function AbrirModalEditar(tipoEjercicioID){
             document.getElementById("TipoEjercicioID").value = tipoEjercicioID;
             $("#ModalTitulo").text("Editar Tipo de Ejercicio");
             document.getElementById("descripcion").value = tipoDeEjercicio.descripcion;
+            document.getElementById("MET").value = tipoDeEjercicio.met;
             $("#ModalTipoEjercicio").modal("show");
         },
 
@@ -106,6 +109,7 @@ function GuardarRegistro(){
     //GUARDAMOS EN UNA VARIABLE LO ESCRITO EN EL INPUT DESCRIPCION
     let tipoEjercicioID = document.getElementById("TipoEjercicioID").value;
     let descripcion = document.getElementById("descripcion").value;
+    let met = document.getElementById("MET").value;
     //POR UN LADO PROGRAMAR VERIFICACIONES DE DATOS EN EL FRONT CUANDO 
     //SON DE INGRESO DE Y NO SE NECESITA VERIFICAR EN BASE DE DATOS.
     //LUEGO POR OTRO LADO HACER VERIFICACIÓN DE DATOS EN EL BACK,
@@ -117,7 +121,8 @@ function GuardarRegistro(){
         // (también es posible utilizar una cadena de datos)
         data: { 
             tipoEjercicioID: tipoEjercicioID, 
-            descripcion: descripcion
+            descripcion: descripcion,
+            met: met
         },
         // especifica si será una petición POST o GET
         type: 'POST',

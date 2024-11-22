@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace Proyecto1_2024.Controllers;
 
-[Authorize (Roles = "DEPORTISTA")]
+[Authorize (Roles = "Deportista")]
 public class EjerciciosFisicosController : Controller
 {
     private ApplicationDbContext _context;
@@ -88,12 +88,19 @@ public class EjerciciosFisicosController : Controller
         var tiposEjercicios = _context.TipoEjercicios.ToList();
         var lugares = _context.Lugares.ToList();
         var eventosDeportivos = _context.EventosDeportivos.ToList();
+        var personas = _context.Personas.ToList();
+
 
         foreach (var ejercicioFisico in ejerciciosFisicos)
         {
             var tipoEjercicio = tiposEjercicios.Where(t => t.TipoEjercicioID == ejercicioFisico.TipoEjercicioID).Single();
             var lugar = lugares.Where(t => t.LugarID == ejercicioFisico.LugarID).Single();
             var eventoDeportivo = eventosDeportivos.Where(t => t.EventoDeportivoID == ejercicioFisico.EventoDeportivoID).Single();
+            var persona = personas.Where(t => t.PersonaID == ejercicioFisico.PersonaID).Single();
+
+
+            var calQuemadas = tipoEjercicio.MET * persona.Peso * (decimal)ejercicioFisico.IntervaloEjercicio.TotalHours;
+
 
             var ejercicioFisicoMostrar = new VistaEjercicioFisico
             {
@@ -106,15 +113,27 @@ public class EjerciciosFisicosController : Controller
                 EventoDeportivoString = eventoDeportivo.Descripcion,
                 FechaInicioString = ejercicioFisico.Inicio.ToString("dd/MM/yyyy HH:mm"),
                 FechaFinString = ejercicioFisico.Fin.ToString("dd/MM/yyyy HH:mm"),
+                IntervaloEjercicio = Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes),
+                CaloriasQuemadas = tipoEjercicio.MET * persona.Peso * Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes) / 60,
                 EstadoEmocionalInicio = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalInicio),
                 EstadoEmocionalFin = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalFin),
-                Observaciones = ejercicioFisico.Observaciones
+                Observaciones = ejercicioFisico.Observaciones, 
             };
             ejerciciosFisicosMostrar.Add(ejercicioFisicoMostrar);
         }
 
+
         return Json(ejerciciosFisicosMostrar);
     }
+
+
+
+
+
+
+
+
+
 
 
     public JsonResult EjerciciosFisicos(int? ejercicioFisicoID)

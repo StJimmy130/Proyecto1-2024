@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Proyecto1_2024.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Proyecto1_2024.Migrations;
 
 namespace Proyecto1_2024.Controllers;
 
-[Authorize (Roles = "DEPORTISTA")]
+[Authorize (Roles = "Deportista")]
 public class SeguimientoController : Controller
 {
     private ApplicationDbContext _context;
@@ -127,7 +128,8 @@ public class SeguimientoController : Controller
         List<VistaEjercicioFisico> ejerciciosFisicosMostrar = new List<VistaEjercicioFisico>();
 
 
-        var ejerciciosFisicos = _context.EjerciciosFisicos.Include(e => e.Personas).Where(e => e.Personas.PersonaID == PersonaID).AsQueryable();
+        var ejerciciosFisicos = _context.EjerciciosFisicos.Where(e => e.Personas.PersonaID == PersonaID).AsQueryable();
+        var personas = _context.Personas.ToList();
 
 
         if (id != null)
@@ -149,6 +151,9 @@ public class SeguimientoController : Controller
         foreach (var ejercicioFisico in ejerciciosFisicos)
         {
             var tipoEjercicio = tiposEjercicios.Single(t => t.TipoEjercicioID == ejercicioFisico.TipoEjercicioID);
+            var persona = personas.Where(t => t.PersonaID == ejercicioFisico.PersonaID).Single();
+
+            var calQuemadas = tipoEjercicio.MET * persona.Peso * (decimal)ejercicioFisico.IntervaloEjercicio.TotalHours;
 
             var ejercicioFisicosMostrar = new VistaEjercicioFisico
             {
@@ -158,6 +163,7 @@ public class SeguimientoController : Controller
                 FechaInicioString = ejercicioFisico.Inicio.ToString("dd/MM/yyyy HH:mm"),
                 FechaFinString = ejercicioFisico.Fin.ToString("dd/MM/yyyy HH:mm"),
                 IntervaloEjercicio = Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes),
+                CaloriasQuemadas = tipoEjercicio.MET * persona.Peso * Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes) / 60,
                 EstadoEmocionalInicio = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalInicio),
                 EstadoEmocionalFin = Enum.GetName(typeof(EstadoEmocional), ejercicioFisico.EstadoEmocionalFin),
                 Observaciones = ejercicioFisico.Observaciones
@@ -183,7 +189,8 @@ public class SeguimientoController : Controller
         List<VistaEjercicioFisico> ejerciciosFisicosPorLugarMostrar = new List<VistaEjercicioFisico>();
 
 
-        var ejerciciosFisicos = _context.EjerciciosFisicos.Include(e => e.Personas).Where(e => e.Personas.PersonaID == PersonaID).AsQueryable();
+        var ejerciciosFisicos = _context.EjerciciosFisicos.Where(e => e.Personas.PersonaID == PersonaID).AsQueryable();
+        var personas = _context.Personas.ToList();
 
 
         if (id != null)
@@ -208,6 +215,9 @@ public class SeguimientoController : Controller
         {
             var lugar = lugares.Where(t => t.LugarID == ejercicioFisico.LugarID).Single();
             var tipoEjercicio = tiposEjercicios.Where(t => t.TipoEjercicioID == ejercicioFisico.TipoEjercicioID).Single();
+            var persona = personas.Where(t => t.PersonaID == ejercicioFisico.PersonaID).Single();
+
+            var calQuemadas = tipoEjercicio.MET * persona.Peso * (decimal)ejercicioFisico.IntervaloEjercicio.TotalHours;
 
             var ejercicioFisicoPorLugarMostrar = new VistaEjercicioFisico
             {
@@ -218,6 +228,7 @@ public class SeguimientoController : Controller
                 FechaInicioString = ejercicioFisico.Inicio.ToString("dd/MM/yyyy HH:mm"),
                 FechaFinString = ejercicioFisico.Fin.ToString("dd/MM/yyyy HH:mm"),
                 IntervaloEjercicio = Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes),
+                CaloriasQuemadas = tipoEjercicio.MET * persona.Peso * Convert.ToDecimal(ejercicioFisico.IntervaloEjercicio.TotalMinutes) / 60,
                 TipoEjercicioDescripcion = tipoEjercicio.Descripcion,
                 Observaciones = ejercicioFisico.Observaciones
             };
@@ -247,15 +258,21 @@ public class SeguimientoController : Controller
             .Include(t => t.Lugares)
             .Include(t => t.TipoEjercicios)
             .Include(t => t.EventosDeportivos)
-            .Include(t => t.Personas)
             .Where(t => t.Personas.PersonaID == PersonaID)
             .ToList();
+            var personas = _context.Personas.ToList();
+
+            
 
         foreach (var listadoEventos in ejercicioFisicos)
         {
             var EventosMostrar = vistaEventos
                 .Where(t => t.EventoDeportivoID == listadoEventos.EventoDeportivoID)
                 .SingleOrDefault();
+            
+            
+
+            
 
             if (EventosMostrar == null)
             {

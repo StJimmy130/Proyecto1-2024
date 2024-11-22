@@ -5,6 +5,7 @@ using Proyecto1_2024.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace Proyecto1_2024.Controllers;
 
@@ -53,8 +54,28 @@ public class PersonasController : Controller
     }
 
 
-    public JsonResult GuardarDatosUsuario(int? PersonaID, string? NombreCompleto, DateOnly FechaNacimiento, Genero Genero, decimal Peso, decimal Altura)
+    public JsonResult GuardarDatosUsuario(int? PersonaID, string? NombreCompleto, DateTime FechaNacimiento, Genero Genero, string Peso, string Altura)
     {
+        //FIJAR INFORMACION DE CULTURA PARA FECHA Y DECIMALES
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("es-AR");
+        string pesoString = Peso;
+        if(!string.IsNullOrEmpty(pesoString)){
+            pesoString = pesoString.Replace(".", ",");
+        }
+        Decimal pesoDecimal = new Decimal();
+        var validaPeso = Decimal.TryParse(pesoString, out pesoDecimal);
+
+
+        //FIJAR INFORMACION DE CULTURA PARA FECHA Y DECIMALES
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("es-AR");
+        string alturaString = Altura;
+        if(!string.IsNullOrEmpty(alturaString)){
+            alturaString = alturaString.Replace(".", ",");
+        }
+        Decimal alturaDecimal = new Decimal();
+        var validaAltura = Decimal.TryParse(alturaString, out alturaDecimal);
+
+
         string resultado = "";
         if(NombreCompleto != null)
         {
@@ -64,8 +85,8 @@ public class PersonasController : Controller
                 Persona.NombreCompleto = NombreCompleto;
                 Persona.FechaNacimiento = FechaNacimiento;
                 Persona.Genero = Genero;
-                Persona.Peso = Peso;
-                Persona.Altura = Altura;
+                Persona.Peso = pesoDecimal;
+                Persona.Altura = alturaDecimal;
                 _context.SaveChanges();
                 
                 

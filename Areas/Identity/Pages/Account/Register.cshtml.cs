@@ -97,7 +97,7 @@ namespace Proyecto1.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Date)]
             [Display(Name = "Fecha de Nacimiento")]
-            public DateOnly FechaNacimiento { get; set; }
+            public DateTime FechaNacimiento { get; set; }
 
             /// <summary>
             ///     Género del usuario.

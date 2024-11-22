@@ -9,12 +9,14 @@ public class Persona
     [Key]
     public int PersonaID { get; set; }
     public string NombreCompleto { get; set; }
-    public DateOnly FechaNacimiento { get; set; }
+    public DateTime FechaNacimiento { get; set; }
     public Genero Genero { get; set; }
     public decimal Peso { get; set; }
     public decimal Altura { get; set; }
     public string? CuentaID { get; set; }
-    
+
+
+
     public virtual ICollection<EjercicioFisico> EjerciciosFisicos { get; set; }
     public virtual ICollection<Lugar> Lugares { get; set; }
 
@@ -31,7 +33,7 @@ public class PersonaConRolViewModel
 {
     public int PersonaID { get; set; }
     public string? NombreCompleto { get; set; }
-    public DateOnly FechaNacimiento { get; set; }
+    public string FechaNacimiento { get; set; }
     public string? Genero { get; set; }
     public decimal Peso { get; set; }
     public decimal Altura { get; set; }

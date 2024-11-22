@@ -14,9 +14,10 @@
 
 <h5 for="Generos" class="text-white text-center">Filtrar por géneros</h5>
 <div class="mb-3 col-12 d-flex justify-content-center">
-  @Html.DropDownList("Generos", null, htmlAttributes: new { @class = "form-control text-dark bg-light", @style = "width: 300px;", @id = "Genero" })
-  <button class="btn btn-primary ms-2" onclick="ListadoDeportistas()">Filtrar</button>
-  <button onclick="LimpiarFiltro()" class="btn btn-secondary ms-2">Limpiar </button>
+  @Html.DropDownList("Generos", null, htmlAttributes: new { @class = "form-control text-dark bg-light", 
+  @onchange="ListadoDeportistas()", @style = "width: 300px;", @id = "Genero" })
+  
+  
 </div>
 
 
